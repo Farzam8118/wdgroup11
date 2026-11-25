@@ -1,1359 +1,1701 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#111d34">
-<title>پنل والدین | سامانه مدیریت مدرسه</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-<style>
-:root {
-    --navy: #111d34;
-    --purple: #6558d3;
-    --purple-light: #f0efff;
-    --green: #129b83;
-    --orange: #e69b43;
-    --red: #d85d68;
-    --blue: #4a89ce;
-    --bg: #f5f7fb;
-    --text: #1b2840;
-    --muted: #8490a3;
-    --border: #e8edf4;
-}
-
-* {
-    box-sizing: border-box;
-}
-
-body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--text);
-    font-family: "Vazirmatn", Tahoma, sans-serif;
-    font-size: 13px;
-}
-
-button, input, select, textarea {
-    font: inherit;
-}
-
-button {
-    cursor: pointer;
-}
-
-.sidebar {
-    position: fixed;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    width: 255px;
-    padding: 22px 15px;
-    background: linear-gradient(180deg, #14213b, #0c172b);
-    color: #d8e0ed;
-    display: flex;
-    flex-direction: column;
-    z-index: 20;
-    overflow-y: auto;
-}
-
-.brand {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 5px 10px 22px;
-    border-bottom: 1px solid #ffffff18;
-}
-
-.brand-logo {
-    width: 43px;
-    height: 43px;
-    display: grid;
-    place-items: center;
-    border-radius: 14px;
-    background: linear-gradient(135deg, #9287ff, #6255cf);
-    color: white;
-    font-size: 21px;
-    font-weight: 900;
-}
-
-.brand strong {
-    display: block;
-    color: white;
-    font-size: 14px;
-}
-
-.brand small {
-    color: #92a0b8;
-    font-size: 9px;
-}
-
-.parent-info {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 17px 3px 10px;
-    padding: 12px;
-    border: 1px solid #ffffff18;
-    border-radius: 13px;
-    background: #ffffff09;
-}
-
-.avatar {
-    width: 40px;
-    height: 40px;
-    flex-shrink: 0;
-    display: grid;
-    place-items: center;
-    border-radius: 13px;
-    background: #eceaff;
-    color: var(--purple);
-    font-weight: 900;
-}
-
-.parent-info strong {
-    display: block;
-    color: white;
-    font-size: 11px;
-}
-
-.parent-info small {
-    color: #94a1b8;
-    font-size: 9px;
-}
-
-.nav-title {
-    padding: 17px 12px 7px;
-    color: #7789a4;
-    font-size: 9px;
-    font-weight: 800;
-}
-
-.nav-menu {
-    display: grid;
-    gap: 5px;
-}
-
-.nav-menu button {
-    display: flex;
-    align-items: center;
-    gap: 11px;
-    width: 100%;
-    padding: 11px 12px;
-    border: 0;
-    border-radius: 10px;
-    background: transparent;
-    color: #afbdd2;
-    text-align: right;
-    font-size: 11px;
-    transition: .2s;
-}
-
-.nav-menu button:hover,
-.nav-menu button.active {
-    background: #766be044;
-    color: white;
-}
-
-.nav-menu button.active {
-    border-right: 3px solid #a49bff;
-}
-
-.nav-icon {
-    width: 21px;
-    text-align: center;
-    font-size: 16px;
-}
-
-.badge-count {
-    margin-right: auto;
-    padding: 1px 7px;
-    border-radius: 20px;
-    background: var(--red);
-    color: white;
-    font-size: 9px;
-}
-
-.sidebar-footer {
-    margin-top: auto;
-    padding: 16px 8px 0;
-    border-top: 1px solid #ffffff18;
-    color: #8f9db4;
-    font-size: 9px;
-}
-
-.sidebar-footer strong {
-    display: block;
-    color: white;
-    font-size: 10px;
-}
-
-.main {
-    width: calc(100% - 255px);
-    margin-right: 255px;
-    min-height: 100vh;
-}
-
-.topbar {
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    min-height: 72px;
-    padding: 12px 30px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    border-bottom: 1px solid var(--border);
-    background: #ffffffed;
-    backdrop-filter: blur(12px);
-}
-
-.topbar h1 {
-    margin: 0;
-    font-size: 16px;
-}
-
-.topbar p {
-    margin: 2px 0 0;
-    color: var(--muted);
-    font-size: 10px;
-}
-
-.top-actions {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-}
-
-.top-actions button {
-    padding: 8px 12px;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    background: white;
-    color: var(--text);
-    font-size: 10px;
-}
-
-.mobile-menu {
-    display: none;
-}
-
-.content {
-    max-width: 1500px;
-    margin: auto;
-    padding: 26px 30px 45px;
-}
-
-.page {
-    display: none;
-}
-
-.page.active {
-    display: block;
-    animation: appear .2s ease;
-}
-
-@keyframes appear {
-    from { opacity: 0; transform: translateY(5px); }
-    to { opacity: 1; transform: none; }
-}
-
-.welcome {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 15px;
-    padding: 23px 25px;
-    margin-bottom: 18px;
-    border: 1px solid #e8e5ff;
-    border-radius: 18px;
-    background: linear-gradient(115deg, #f5f3ff, white 70%);
-}
-
-.welcome h2 {
-    margin: 0 0 5px;
-    font-size: 18px;
-}
-
-.welcome p {
-    margin: 0;
-    color: var(--muted);
-    font-size: 11px;
-}
-
-.welcome-icon {
-    width: 80px;
-    height: 80px;
-    display: grid;
-    place-items: center;
-    border-radius: 25px;
-    background: #e9e5ff;
-    color: var(--purple);
-    font-size: 38px;
-}
-
-.tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 7px;
-    margin-top: 11px;
-}
-
-.pill {
-    display: inline-flex;
-    padding: 4px 9px;
-    border-radius: 20px;
-    background: #f1efff;
-    color: var(--purple);
-    font-size: 9px;
-}
-
-.pill.green {
-    background: #e8f7f3;
-    color: var(--green);
-}
-
-.pill.orange {
-    background: #fff5e8;
-    color: #b97927;
-}
-
-.pill.red {
-    background: #fff0f1;
-    color: var(--red);
-}
-
-.grid {
-    display: grid;
-    gap: 15px;
-}
-
-.stats {
-    grid-template-columns: repeat(4, 1fr);
-    margin-bottom: 16px;
-}
-
-.card {
-    min-width: 0;
-    border: 1px solid var(--border);
-    border-radius: 17px;
-    background: white;
-    box-shadow: 0 10px 30px #16233b08;
-}
-
-.stat {
-    padding: 17px;
-}
-
-.stat-label {
-    color: var(--muted);
-    font-size: 10px;
-}
-
-.stat-value {
-    margin: 9px 0 2px;
-    font-size: 23px;
-    font-weight: 900;
-}
-
-.stat-note {
-    color: var(--muted);
-    font-size: 9px;
-}
-
-.dashboard-grid {
-    grid-template-columns: 1.3fr 1fr;
-    align-items: start;
-}
-
-.card-head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    padding: 16px 18px 12px;
-}
-
-.card-head h3 {
-    margin: 0;
-    font-size: 12px;
-}
-
-.card-head p {
-    margin: 3px 0 0;
-    color: var(--muted);
-    font-size: 9px;
-}
-
-.card-body {
-    padding: 0 18px 17px;
-}
-
-.progress-item {
-    display: grid;
-    grid-template-columns: 75px 1fr 35px;
-    align-items: center;
-    gap: 10px;
-    margin: 14px 0;
-    font-size: 10px;
-}
-
-.progress {
-    height: 7px;
-    border-radius: 20px;
-    background: #eef1f6;
-    overflow: hidden;
-}
-
-.progress span {
-    display: block;
-    height: 100%;
-    border-radius: 20px;
-    background: linear-gradient(90deg, #9287ff, #6558d3);
-}
-
-.score {
-    text-align: left;
-    font-weight: 800;
-}
-
-.activity {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 11px 0;
-    border-bottom: 1px solid #f0f2f6;
-}
-
-.activity:last-child {
-    border: 0;
-}
-
-.activity-icon {
-    width: 34px;
-    height: 34px;
-    display: grid;
-    place-items: center;
-    flex-shrink: 0;
-    border-radius: 11px;
-    background: var(--purple-light);
-    color: var(--purple);
-}
-
-.activity strong {
-    display: block;
-    font-size: 10px;
-}
-
-.activity small {
-    color: var(--muted);
-    font-size: 9px;
-}
-
-.intro {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    margin: 3px 0 17px;
-}
-
-.intro h2 {
-    margin: 0;
-    font-size: 17px;
-}
-
-.intro p {
-    margin: 3px 0 0;
-    color: var(--muted);
-    font-size: 10px;
-}
-
-.filter {
-    padding: 8px 11px;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    background: white;
-    color: var(--text);
-    font-size: 10px;
-}
-
-.table-wrap {
-    overflow-x: auto;
-    padding: 0 17px 17px;
-}
-
-table {
-    width: 100%;
-    min-width: 540px;
-    border-collapse: collapse;
-}
-
-th, td {
-    padding: 12px 10px;
-    border-bottom: 1px solid #eff1f5;
-    text-align: right;
-    white-space: nowrap;
-    font-size: 10px;
-}
-
-th {
-    background: #fafbfe;
-    color: var(--muted);
-}
-
-td {
-    color: #4e5d74;
-}
-
-.grade-cards {
-    grid-template-columns: repeat(3, 1fr);
-    margin-bottom: 15px;
-}
-
-.grade-card {
-    padding: 17px;
-}
-
-.grade-card small {
-    color: var(--muted);
-    font-size: 9px;
-}
-
-.grade-card strong {
-    display: block;
-    margin: 5px 0;
-    font-size: 22px;
-}
-
-.schedule-table {
-    min-width: 650px;
-}
-
-.schedule-table td {
-    white-space: normal;
-}
-
-.task {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    padding: 15px;
-    margin-bottom: 11px;
-}
-
-.task input {
-    width: 19px;
-    height: 19px;
-    accent-color: var(--purple);
-}
-
-.task strong {
-    font-size: 11px;
-}
-
-.task p {
-    margin: 4px 0;
-    color: var(--muted);
-    font-size: 9px;
-}
-
-.task-meta {
-    display: flex;
-    gap: 6px;
-    margin-top: 6px;
-}
-
-.messages {
-    display: grid;
-    grid-template-columns: 240px 1fr;
-    gap: 14px;
-}
-
-.contacts {
-    padding: 9px;
-}
-
-.contact {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    width: 100%;
-    padding: 11px;
-    border: 0;
-    border-radius: 11px;
-    background: transparent;
-    text-align: right;
-}
-
-.contact.active,
-.contact:hover {
-    background: var(--purple-light);
-}
-
-.contact strong {
-    display: block;
-    font-size: 10px;
-}
-
-.contact small {
-    color: var(--muted);
-    font-size: 8px;
-}
-
-.chat {
-    display: flex;
-    flex-direction: column;
-    min-height: 410px;
-}
-
-.chat-head {
-    padding: 14px;
-    border-bottom: 1px solid var(--border);
-    font-size: 11px;
-    font-weight: 800;
-}
-
-.chat-body {
-    flex: 1;
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    background: #fafbfe;
-}
-
-.bubble {
-    max-width: 80%;
-    padding: 10px 13px;
-    border: 1px solid var(--border);
-    border-radius: 13px;
-    background: white;
-    font-size: 10px;
-}
-
-.bubble.mine {
-    align-self: flex-start;
-    background: var(--purple-light);
-}
-
-.chat-form {
-    display: flex;
-    gap: 8px;
-    padding: 12px;
-    border-top: 1px solid var(--border);
-}
-
-.chat-form input {
-    flex: 1;
-    min-width: 0;
-    padding: 10px;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    outline: none;
-    font-size: 10px;
-}
-
-.btn {
-    padding: 9px 14px;
-    border: 0;
-    border-radius: 10px;
-    background: var(--purple);
-    color: white;
-    font-size: 10px;
-    font-weight: 700;
-}
-
-.btn.secondary {
-    background: #f1f3f8;
-    color: var(--text);
-}
-
-.finance-grid {
-    grid-template-columns: repeat(3, 1fr);
-    margin-bottom: 15px;
-}
-
-.finance-card {
-    padding: 17px;
-}
-
-.finance-card small {
-    color: var(--muted);
-    font-size: 9px;
-}
-
-.finance-card strong {
-    display: block;
-    margin: 5px 0;
-    font-size: 18px;
-}
-
-.notice {
-    display: flex;
-    gap: 12px;
-    padding: 16px;
-    border-bottom: 1px solid #eff1f5;
-}
-
-.notice:last-child {
-    border: 0;
-}
-
-.notice-icon {
-    width: 37px;
-    height: 37px;
-    display: grid;
-    place-items: center;
-    flex-shrink: 0;
-    border-radius: 12px;
-    background: var(--purple-light);
-}
-
-.notice strong {
-    font-size: 10px;
-}
-
-.notice p {
-    margin: 3px 0;
-    color: #69778d;
-    font-size: 9px;
-}
-
-.notice small {
-    color: var(--muted);
-    font-size: 8px;
-}
-
-.profile {
-    display: grid;
-    grid-template-columns: 250px 1fr;
-    gap: 15px;
-}
-
-.profile-card {
-    padding: 23px;
-    text-align: center;
-}
-
-.profile-card .avatar {
-    width: 70px;
-    height: 70px;
-    margin: 0 auto 12px;
-    font-size: 22px;
-}
-
-.profile-card h3 {
-    margin: 0;
-}
-
-.profile-card p {
-    color: var(--muted);
-    font-size: 9px;
-}
-
-.fields {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-    padding: 19px;
-}
-
-.field label {
-    display: block;
-    margin-bottom: 5px;
-    color: #66748a;
-    font-size: 9px;
-}
-
-.field input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    outline: none;
-    font-size: 10px;
-}
-
-.toast {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    z-index: 50;
-    padding: 12px 17px;
-    border-radius: 11px;
-    background: var(--navy);
-    color: white;
-    font-size: 10px;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: .2s;
-    pointer-events: none;
-}
-
-.toast.show {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.demo-note {
-    margin-top: 16px;
-    color: var(--muted);
-    font-size: 9px;
-}
-
-@media(max-width:1100px) {
-    .stats { grid-template-columns: repeat(2, 1fr); }
-    .dashboard-grid { grid-template-columns: 1fr; }
-}
-
-@media(max-width:800px) {
-    .sidebar {
-        transform: translateX(100%);
-        transition: .25s;
-    }
-
-    .sidebar.open {
-        transform: translateX(0);
-    }
-
-    .main {
-        width: 100%;
-        margin: 0;
-    }
-
-    .mobile-menu {
-        display: inline-block;
-        padding: 7px 10px;
-    }
-
-    .topbar {
-        padding: 10px 15px;
-    }
-
-    .content {
-        padding: 18px 15px 35px;
-    }
-
-    .messages, .profile {
-        grid-template-columns: 1fr;
-    }
-
-    .grade-cards, .finance-grid {
-        grid-template-columns: 1fr 1fr;
-    }
-}
-
-@media(max-width:500px) {
-    .welcome {
-        padding: 16px;
-    }
-
-    .welcome-icon {
-        width: 58px;
-        height: 58px;
-        font-size: 26px;
-    }
-
-    .welcome h2 {
-        font-size: 15px;
-    }
-
-    .stats {
-        gap: 9px;
-    }
-
-    .stat {
-        padding: 12px;
-    }
-
-    .stat-value {
-        font-size: 19px;
-    }
-
-    .grade-cards, .finance-grid, .fields {
-        grid-template-columns: 1fr;
-    }
-
-    .intro {
-        align-items: flex-start;
-        flex-direction: column;
-    }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#111d34">
+    <title>پنل والدین | مدرسه هوشمند</title>
+
+    <!-- Tailwind CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+
+    <!-- Vazirmatn Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --navy: #111d34;
+            --navy-light: #192945;
+            --purple: #6558d3;
+            --purple-light: #f0efff;
+            --green: #129b83;
+            --green-light: #e8f7f3;
+            --orange: #e69b43;
+            --orange-light: #fff5e8;
+            --red: #d85d68;
+            --red-light: #fff0f1;
+            --blue: #4a89ce;
+            --blue-light: #edf5ff;
+            --bg: #f5f7fb;
+            --text: #1b2840;
+            --muted: #8490a3;
+            --border: #e8edf4;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 95px;
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: "Vazirmatn", Tahoma, sans-serif;
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button, input, select {
+            font: inherit;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 255px;
+            padding: 22px 15px;
+            background: linear-gradient(180deg, #14213b, #0c172b);
+            color: #d8e0ed;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            z-index: 10;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 5px 10px 22px;
+            border-bottom: 1px solid #ffffff18;
+        }
+
+        .brand-logo {
+            width: 43px;
+            height: 43px;
+            flex-shrink: 0;
+            display: grid;
+            place-items: center;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #9287ff, #6255cf);
+            color: white;
+            font-size: 21px;
+            font-weight: 900;
+        }
+
+        .brand strong {
+            display: block;
+            color: white;
+            font-size: 14px;
+        }
+
+        .brand small {
+            color: #92a0b8;
+            font-size: 9px;
+        }
+
+        .parent-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 17px 3px 10px;
+            padding: 12px;
+            border: 1px solid #ffffff18;
+            border-radius: 13px;
+            background: #ffffff09;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0;
+            display: grid;
+            place-items: center;
+            border-radius: 13px;
+            background: #eceaff;
+            color: var(--purple);
+            font-size: 13px;
+            font-weight: 900;
+        }
+
+        .parent-info strong {
+            display: block;
+            color: white;
+            font-size: 11px;
+        }
+
+        .parent-info small {
+            color: #94a1b8;
+            font-size: 9px;
+        }
+
+        .nav-title {
+            padding: 17px 12px 7px;
+            color: #7789a4;
+            font-size: 9px;
+            font-weight: 800;
+        }
+
+        .nav-menu {
+            display: grid;
+            gap: 5px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            color: #afbdd2;
+            font-size: 11px;
+            font-weight: 600;
+            transition: .2s;
+        }
+
+        .nav-link:hover {
+            background: #766be044;
+            color: white;
+        }
+
+        .nav-icon {
+            width: 21px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .nav-count {
+            margin-right: auto;
+            padding: 1px 7px;
+            border-radius: 20px;
+            background: var(--red);
+            color: white;
+            font-size: 9px;
+        }
+
+        .sidebar-footer {
+            margin-top: auto;
+            padding: 16px 8px 0;
+            border-top: 1px solid #ffffff18;
+            color: #8f9db4;
+            font-size: 9px;
+        }
+
+        .sidebar-footer strong {
+            display: block;
+            color: white;
+            font-size: 10px;
+        }
+
+        .main {
+            width: calc(100% - 255px);
+            margin-right: 255px;
+            min-height: 100vh;
+        }
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 5;
+            min-height: 72px;
+            padding: 12px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            border-bottom: 1px solid var(--border);
+            background: #ffffffed;
+            backdrop-filter: blur(12px);
+        }
+
+        .topbar h1 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 900;
+        }
+
+        .topbar p {
+            margin: 2px 0 0;
+            color: var(--muted);
+            font-size: 10px;
+        }
+
+        .top-actions {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+        }
+
+        .top-button {
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: white;
+            color: var(--text);
+            font-size: 10px;
+        }
+
+        .content {
+            max-width: 1500px;
+            margin: auto;
+            padding: 26px 30px 45px;
+        }
+
+        .section {
+            margin-bottom: 24px;
+            scroll-margin-top: 95px;
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin: 3px 0 16px;
+        }
+
+        .section-heading h2 {
+            margin: 0;
+            font-size: 17px;
+            font-weight: 900;
+        }
+
+        .section-heading p {
+            margin: 3px 0 0;
+            color: var(--muted);
+            font-size: 10px;
+        }
+
+        .card {
+            min-width: 0;
+            border: 1px solid var(--border);
+            border-radius: 17px;
+            background: white;
+            box-shadow: 0 10px 30px rgba(22,35,59,.05);
+        }
+
+        .card-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 17px 18px 12px;
+        }
+
+        .card-head h3 {
+            margin: 0;
+            font-size: 12px;
+            font-weight: 900;
+        }
+
+        .card-head p {
+            margin: 3px 0 0;
+            color: var(--muted);
+            font-size: 9px;
+        }
+
+        .card-body {
+            padding: 0 18px 17px;
+        }
+
+        .grid {
+            display: grid;
+            gap: 15px;
+        }
+
+        .stats {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            margin-bottom: 16px;
+        }
+
+        .stat {
+            padding: 17px;
+        }
+
+        .stat-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .stat-label {
+            color: var(--muted);
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .stat-icon {
+            width: 36px;
+            height: 36px;
+            display: grid;
+            place-items: center;
+            border-radius: 12px;
+            font-size: 17px;
+        }
+
+        .stat-value {
+            margin: 9px 0 2px;
+            font-size: 23px;
+            font-weight: 900;
+        }
+
+        .stat-note {
+            color: var(--muted);
+            font-size: 9px;
+        }
+
+        .welcome {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 23px 25px;
+            margin-bottom: 18px;
+            border: 1px solid #e8e5ff;
+            border-radius: 18px;
+            background: linear-gradient(115deg, #f5f3ff, white 70%);
+        }
+
+        .welcome h2 {
+            margin: 0 0 5px;
+            font-size: 18px;
+            font-weight: 900;
+        }
+
+        .welcome p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .welcome-icon {
+            width: 82px;
+            height: 82px;
+            flex-shrink: 0;
+            display: grid;
+            place-items: center;
+            border-radius: 26px;
+            background: #e9e5ff;
+            color: var(--purple);
+            font-size: 39px;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+            margin-top: 11px;
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 9px;
+            border-radius: 20px;
+            background: var(--purple-light);
+            color: var(--purple);
+            font-size: 9px;
+        }
+
+        .pill.green {
+            background: var(--green-light);
+            color: var(--green);
+        }
+
+        .pill.orange {
+            background: var(--orange-light);
+            color: #b97927;
+        }
+
+        .pill.red {
+            background: var(--red-light);
+            color: var(--red);
+        }
+
+        .pill.blue {
+            background: var(--blue-light);
+            color: var(--blue);
+        }
+
+        .dashboard-grid {
+            grid-template-columns: minmax(0, 1.3fr) minmax(270px, .85fr);
+            align-items: start;
+        }
+
+        .progress-item {
+            display: grid;
+            grid-template-columns: 75px 1fr 38px;
+            align-items: center;
+            gap: 10px;
+            margin: 14px 0;
+            font-size: 10px;
+        }
+
+        .progress {
+            height: 7px;
+            border-radius: 20px;
+            background: #eef1f6;
+            overflow: hidden;
+        }
+
+        .progress span {
+            display: block;
+            height: 100%;
+            border-radius: 20px;
+            background: linear-gradient(90deg, #9287ff, #6558d3);
+        }
+
+        .score {
+            text-align: left;
+            font-weight: 800;
+        }
+
+        .activity {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 11px 0;
+            border-bottom: 1px solid #f0f2f6;
+        }
+
+        .activity:last-child {
+            border-bottom: 0;
+        }
+
+        .activity-icon {
+            width: 34px;
+            height: 34px;
+            flex-shrink: 0;
+            display: grid;
+            place-items: center;
+            border-radius: 11px;
+            background: var(--purple-light);
+            color: var(--purple);
+        }
+
+        .activity strong {
+            display: block;
+            font-size: 10px;
+        }
+
+        .activity small {
+            color: var(--muted);
+            font-size: 9px;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+            padding: 0 17px 17px;
+        }
+
+        table {
+            width: 100%;
+            min-width: 550px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #eff1f5;
+            text-align: right;
+            white-space: nowrap;
+            font-size: 10px;
+        }
+
+        th {
+            background: #fafbfe;
+            color: var(--muted);
+            font-weight: 700;
+        }
+
+        td {
+            color: #4e5d74;
+        }
+
+        td strong {
+            color: var(--text);
+        }
+
+        .filter {
+            padding: 8px 11px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: white;
+            color: var(--text);
+            font-size: 10px;
+        }
+
+        .grade-cards {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            margin-bottom: 15px;
+        }
+
+        .grade-card {
+            padding: 17px;
+        }
+
+        .grade-card small {
+            color: var(--muted);
+            font-size: 9px;
+        }
+
+        .grade-card strong {
+            display: block;
+            margin: 5px 0;
+            font-size: 22px;
+            font-weight: 900;
+        }
+
+        .schedule-table {
+            min-width: 680px;
+        }
+
+        .schedule-table td {
+            min-width: 95px;
+            padding: 12px 9px;
+            white-space: normal;
+            background: #fbfcfe;
+        }
+
+        .schedule-table td strong {
+            display: block;
+        }
+
+        .schedule-table td small {
+            color: var(--muted);
+            font-size: 8px;
+        }
+
+        .task {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 15px;
+            margin-bottom: 11px;
+        }
+
+        .task-icon {
+            width: 36px;
+            height: 36px;
+            flex-shrink: 0;
+            display: grid;
+            place-items: center;
+            border-radius: 11px;
+            background: var(--purple-light);
+            color: var(--purple);
+        }
+
+        .task strong {
+            font-size: 11px;
+        }
+
+        .task p {
+            margin: 4px 0;
+            color: var(--muted);
+            font-size: 9px;
+        }
+
+        .task-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 7px;
+        }
+
+        .messages {
+            display: grid;
+            grid-template-columns: 240px minmax(0, 1fr);
+            gap: 14px;
+        }
+
+        .contacts {
+            padding: 9px;
+        }
+
+        .contact {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 11px;
+            border-radius: 11px;
+            background: #fafbfe;
+            margin-bottom: 7px;
+        }
+
+        .contact-avatar {
+            width: 37px;
+            height: 37px;
+            flex-shrink: 0;
+            display: grid;
+            place-items: center;
+            border-radius: 12px;
+            background: var(--blue-light);
+            color: var(--blue);
+            font-weight: 900;
+        }
+
+        .contact strong {
+            display: block;
+            font-size: 10px;
+        }
+
+        .contact small {
+            color: var(--muted);
+            font-size: 8px;
+        }
+
+        .chat-message {
+            max-width: 80%;
+            padding: 10px 13px;
+            margin-bottom: 11px;
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            background: white;
+            font-size: 10px;
+        }
+
+        .chat-message.mine {
+            margin-right: auto;
+            background: var(--purple-light);
+            border-color: #e4e0ff;
+        }
+
+        .chat-message small {
+            display: block;
+            margin-top: 4px;
+            color: var(--muted);
+            font-size: 8px;
+        }
+
+        .finance-grid {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            margin-bottom: 15px;
+        }
+
+        .finance-card {
+            padding: 17px;
+        }
+
+        .finance-card small {
+            color: var(--muted);
+            font-size: 9px;
+        }
+
+        .finance-card strong {
+            display: block;
+            margin: 5px 0;
+            font-size: 18px;
+            font-weight: 900;
+        }
+
+        .notice {
+            display: flex;
+            gap: 12px;
+            padding: 15px 17px;
+            border-bottom: 1px solid #eff1f5;
+        }
+
+        .notice:last-child {
+            border-bottom: 0;
+        }
+
+        .notice-icon {
+            width: 37px;
+            height: 37px;
+            display: grid;
+            place-items: center;
+            flex-shrink: 0;
+            border-radius: 12px;
+            background: var(--purple-light);
+        }
+
+        .notice strong {
+            font-size: 10px;
+        }
+
+        .notice p {
+            margin: 3px 0;
+            color: #69778d;
+            font-size: 9px;
+        }
+
+        .notice small {
+            color: var(--muted);
+            font-size: 8px;
+        }
+
+        .profile {
+            display: grid;
+            grid-template-columns: 250px minmax(0, 1fr);
+            gap: 15px;
+        }
+
+        .profile-card {
+            padding: 23px;
+            text-align: center;
+        }
+
+        .profile-large {
+            width: 75px;
+            height: 75px;
+            margin: 0 auto 12px;
+            display: grid;
+            place-items: center;
+            border-radius: 24px;
+            background: #eceaff;
+            color: var(--purple);
+            font-size: 24px;
+            font-weight: 900;
+        }
+
+        .profile-card h3 {
+            margin: 0;
+            font-size: 13px;
+        }
+
+        .profile-card p {
+            color: var(--muted);
+            font-size: 9px;
+        }
+
+        .profile-fields {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            padding: 19px;
+        }
+
+        .field label {
+            display: block;
+            margin-bottom: 5px;
+            color: #66748a;
+            font-size: 9px;
+        }
+
+        .field-value {
+            padding: 10px 11px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: #fafbfe;
+            font-size: 10px;
+        }
+
+        .info-note {
+            margin-top: 15px;
+            padding: 12px 14px;
+            border: 1px solid #fae7ca;
+            border-radius: 11px;
+            background: #fff9ef;
+            color: #92713d;
+            font-size: 9px;
+            line-height: 2;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 9px 14px;
+            border-radius: 10px;
+            background: var(--purple);
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .btn-green {
+            background: var(--green);
+        }
+
+        .demo-note {
+            margin-top: 16px;
+            color: var(--muted);
+            font-size: 9px;
+        }
+
+        .footer {
+            padding: 20px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 9px;
+        }
+
+        @media(max-width:1100px) {
+            .stats {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media(max-width:800px) {
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+                padding: 14px;
+                overflow: visible;
+            }
+
+            .brand {
+                padding-bottom: 13px;
+            }
+
+            .parent-info {
+                margin: 12px 0;
+            }
+
+            .nav-title {
+                display: none;
+            }
+
+            .nav-menu {
+                display: flex;
+                overflow-x: auto;
+                gap: 7px;
+                padding: 5px 0;
+                scrollbar-width: thin;
+            }
+
+            .nav-link {
+                flex-shrink: 0;
+                padding: 9px 12px;
+                background: #ffffff0b;
+                white-space: nowrap;
+            }
+
+            .nav-count {
+                margin-right: 0;
+            }
+
+            .sidebar-footer {
+                display: none;
+            }
+
+            .main {
+                width: 100%;
+                margin: 0;
+            }
+
+            .topbar {
+                position: relative;
+                padding: 12px 17px;
+            }
+
+            .content {
+                padding: 18px 15px 32px;
+            }
+
+            .messages,
+            .profile {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media(max-width:520px) {
+            .topbar h1 {
+                font-size: 13px;
+            }
+
+            .topbar p {
+                font-size: 8px;
+            }
+
+            .welcome {
+                padding: 16px;
+            }
+
+            .welcome h2 {
+                font-size: 15px;
+            }
+
+            .welcome-icon {
+                width: 58px;
+                height: 58px;
+                border-radius: 20px;
+                font-size: 27px;
+            }
+
+            .stats {
+                gap: 9px;
+            }
+
+            .stat {
+                padding: 12px;
+            }
+
+            .stat-value {
+                font-size: 19px;
+            }
+
+            .grade-cards,
+            .finance-grid,
+            .profile-fields {
+                grid-template-columns: 1fr;
+            }
+
+            .section-heading {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .top-actions .top-button {
+                padding: 7px 8px;
+            }
+
+            .chat-message {
+                max-width: 95%;
+            }
+        }
+
+        @media print {
+            .sidebar,
+            .topbar,
+            .btn {
+                display: none !important;
+            }
+
+            .main {
+                width: 100%;
+                margin: 0;
+            }
+
+            body {
+                background: white;
+            }
+
+            .card {
+                box-shadow: none;
+                break-inside: avoid;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<aside class="sidebar" id="sidebar">
+    <!-- SIDEBAR -->
 
-    <div class="brand">
-        <div class="brand-logo">م</div>
-        <div>
-            <strong>مدرسه هوشمند</strong>
-            <small>سامانه مدیریت مدرسه</small>
-        </div>
-    </div>
+    <aside class="sidebar">
 
-    <div class="parent-info">
-        <div class="avatar">ر‌م</div>
-        <div>
-            <strong>رضا محمدی</strong>
-            <small>حساب کاربری والدین</small>
-        </div>
-    </div>
+        <div class="brand">
+            <div class="brand-logo">م</div>
 
-    <div class="nav-title">داشبورد و پیگیری</div>
-
-    <nav class="nav-menu">
-        <button class="active" data-view="dashboard">
-            <span class="nav-icon">▦</span> نمای کلی
-        </button>
-        <button data-view="attendance">
-            <span class="nav-icon">◷</span> حضور و غیاب
-        </button>
-        <button data-view="grades">
-            <span class="nav-icon">▤</span> نمرات و کارنامه
-        </button>
-        <button data-view="schedule">
-            <span class="nav-icon">▦</span> برنامه هفتگی
-        </button>
-        <button data-view="homework">
-            <span class="nav-icon">✎</span> تکالیف و فعالیت‌ها
-        </button>
-    </nav>
-
-    <div class="nav-title">ارتباط و امور مالی</div>
-
-    <nav class="nav-menu">
-        <button data-view="messages">
-            <span class="nav-icon">✉</span> پیام به مدرسه
-            <span class="badge-count">2</span>
-        </button>
-        <button data-view="finance">
-            <span class="nav-icon">▣</span> شهریه و پرداخت‌ها
-        </button>
-        <button data-view="notifications">
-            <span class="nav-icon">♧</span> اطلاعیه‌ها
-            <span class="badge-count" id="noticeCount">3</span>
-        </button>
-    </nav>
-
-    <div class="nav-title">حساب کاربری</div>
-
-    <nav class="nav-menu">
-        <button data-view="profile">
-            <span class="nav-icon">♙</span> اطلاعات والد
-        </button>
-    </nav>
-
-    <div class="sidebar-footer">
-        <strong>پنل والدین</strong>
-        سامانه مدیریت و ارتباط با اولیا
-    </div>
-
-</aside>
-
-<main class="main">
-
-    <header class="topbar">
-        <div style="display:flex;align-items:center;gap:10px">
-            <button class="mobile-menu" id="menuToggle">☰</button>
             <div>
-                <h1 id="pageTitle">نمای کلی</h1>
-                <p id="pageSubtitle">گزارش وضعیت تحصیلی فرزند شما</p>
+                <strong>مدرسه هوشمند</strong>
+                <small>سامانه مدیریت مدرسه</small>
             </div>
         </div>
 
-        <div class="top-actions">
-            <button id="childSelect">👦 آرین محمدی ▾</button>
-            <button data-go="notifications">♧</button>
+        <div class="parent-info">
+            <div class="avatar">ر‌م</div>
+
+            <div>
+                <strong>رضا محمدی</strong>
+                <small>حساب کاربری والدین</small>
+            </div>
         </div>
-    </header>
 
-    <div class="content">
+        <div class="nav-title">داشبورد و پیگیری</div>
 
-        <!-- DASHBOARD -->
+        <nav class="nav-menu">
+            <a class="nav-link" href="#dashboard">
+                <span class="nav-icon">▦</span>
+                نمای کلی
+            </a>
 
-        <section class="page active" id="view-dashboard">
+            <a class="nav-link" href="#attendance">
+                <span class="nav-icon">◷</span>
+                حضور و غیاب
+            </a>
 
-            <div class="welcome">
-                <div>
-                    <h2>سلام، آقای محمدی 👋</h2>
-                    <p>به پنل والدین خوش آمدید. وضعیت تحصیلی آرین را اینجا پیگیری کنید.</p>
-                    <div class="tags">
-                        <span class="pill">پایه هشتم · کلاس ۸/۲</span>
-                        <span class="pill green">سال تحصیلی ۱۴۰۵–۱۴۰۶</span>
+            <a class="nav-link" href="#grades">
+                <span class="nav-icon">▤</span>
+                نمرات و کارنامه
+            </a>
+
+            <a class="nav-link" href="#schedule">
+                <span class="nav-icon">▦</span>
+                برنامه هفتگی
+            </a>
+
+            <a class="nav-link" href="#homework">
+                <span class="nav-icon">✎</span>
+                تکالیف و فعالیت‌ها
+            </a>
+        </nav>
+
+        <div class="nav-title">ارتباط و امور مالی</div>
+
+        <nav class="nav-menu">
+            <a class="nav-link" href="#messages">
+                <span class="nav-icon">✉</span>
+                پیام به مدرسه
+                <span class="nav-count">۲</span>
+            </a>
+
+            <a class="nav-link" href="#finance">
+                <span class="nav-icon">▣</span>
+                شهریه و پرداخت‌ها
+            </a>
+
+            <a class="nav-link" href="#notifications">
+                <span class="nav-icon">♧</span>
+                اطلاعیه‌ها
+                <span class="nav-count">۳</span>
+            </a>
+        </nav>
+
+        <div class="nav-title">حساب کاربری</div>
+
+        <nav class="nav-menu">
+            <a class="nav-link" href="#profile">
+                <span class="nav-icon">♙</span>
+                اطلاعات والد
+            </a>
+
+            <a class="nav-link" href="../index.html">
+                <span class="nav-icon">↩</span>
+                بازگشت به صفحه اصلی
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <strong>پنل والدین</strong>
+            سامانه مدیریت و ارتباط با اولیا
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+        <header class="topbar">
+
+            <div>
+                <h1>پنل والدین</h1>
+                <p>گزارش وضعیت تحصیلی و فعالیت‌های فرزند شما</p>
+            </div>
+
+            <div class="top-actions">
+                <span class="top-button">👦 آرین محمدی</span>
+                <a href="../index.html" class="top-button">خروج</a>
+            </div>
+
+        </header>
+
+
+        <div class="content">
+
+            <!-- DASHBOARD -->
+
+            <section class="section" id="dashboard">
+
+                <div class="welcome">
+
+                    <div>
+                        <h2>سلام، آقای محمدی 👋</h2>
+
+                        <p>
+                            به پنل والدین خوش آمدید.
+                            در این بخش می‌توانید وضعیت تحصیلی فرزند خود را پیگیری کنید.
+                        </p>
+
+                        <div class="tags">
+                            <span class="pill">پایه هشتم · کلاس ۸/۲</span>
+                            <span class="pill green">سال تحصیلی ۱۴۰۵–۱۴۰۶</span>
+                        </div>
                     </div>
+
+                    <div class="welcome-icon">🎓</div>
+
                 </div>
-                <div class="welcome-icon">🎓</div>
-            </div>
 
-            <div class="grid stats">
-                <article class="card stat">
-                    <div class="stat-label">میانگین نمرات</div>
-                    <div class="stat-value">۱۸٫۷۵</div>
-                    <div class="stat-note">از ۲۰ · عملکرد خوب</div>
-                </article>
 
-                <article class="card stat">
-                    <div class="stat-label">درصد حضور</div>
-                    <div class="stat-value" style="color:var(--green)">۹۶٪</div>
-                    <div class="stat-note">۲ روز غیبت در ماه</div>
-                </article>
+                <div class="grid stats">
 
-                <article class="card stat">
-                    <div class="stat-label">تکالیف باقی‌مانده</div>
-                    <div class="stat-value" style="color:var(--orange)">۳</div>
-                    <div class="stat-note">یک تکلیف با مهلت امروز</div>
-                </article>
+                    <article class="card stat">
+                        <div class="stat-top">
+                            <span class="stat-label">میانگین نمرات</span>
+                            <span class="stat-icon" style="background:var(--purple-light);color:var(--purple)">▤</span>
+                        </div>
 
-                <article class="card stat">
-                    <div class="stat-label">مانده شهریه</div>
-                    <div class="stat-value" style="font-size:19px">۱٫۲۰۰٫۰۰۰</div>
-                    <div class="stat-note">تومان</div>
-                </article>
-            </div>
+                        <div class="stat-value">۱۸٫۷۵</div>
+                        <div class="stat-note">از ۲۰ · خیلی خوب</div>
+                    </article>
 
-            <div class="grid dashboard-grid">
 
-                <div class="grid">
+                    <article class="card stat">
+                        <div class="stat-top">
+                            <span class="stat-label">حضور در کلاس</span>
+                            <span class="stat-icon" style="background:var(--green-light);color:var(--green)">✓</span>
+                        </div>
+
+                        <div class="stat-value">۹۶٪</div>
+                        <div class="stat-note">۲ روز غیبت در این ماه</div>
+                    </article>
+
+
+                    <article class="card stat">
+                        <div class="stat-top">
+                            <span class="stat-label">تکالیف باقی‌مانده</span>
+                            <span class="stat-icon" style="background:var(--orange-light);color:var(--orange)">✎</span>
+                        </div>
+
+                        <div class="stat-value">۳</div>
+                        <div class="stat-note">یک مورد با مهلت امروز</div>
+                    </article>
+
+
+                    <article class="card stat">
+                        <div class="stat-top">
+                            <span class="stat-label">مانده شهریه</span>
+                            <span class="stat-icon" style="background:var(--blue-light);color:var(--blue)">▣</span>
+                        </div>
+
+                        <div class="stat-value text-lg">۱٬۲۰۰٬۰۰۰</div>
+                        <div class="stat-note">تومان</div>
+                    </article>
+
+                </div>
+
+
+                <div class="grid dashboard-grid">
+
+                    <div class="grid">
+
+                        <!-- SUBJECTS -->
+
+                        <article class="card">
+
+                            <div class="card-head">
+                                <div>
+                                    <h3>وضعیت دروس</h3>
+                                    <p>آخرین میانگین ثبت‌شده برای هر درس</p>
+                                </div>
+
+                                <span class="pill">نیم‌سال اول</span>
+                            </div>
+
+                            <div class="card-body">
+
+                                <div class="progress-item">
+                                    <span>ریاضی</span>
+                                    <div class="progress">
+                                        <span style="width:92%"></span>
+                                    </div>
+                                    <span class="score">۱۸٫۴</span>
+                                </div>
+
+                                <div class="progress-item">
+                                    <span>علوم</span>
+                                    <div class="progress">
+                                        <span style="width:96%;background:var(--green)"></span>
+                                    </div>
+                                    <span class="score">۱۹٫۲</span>
+                                </div>
+
+                                <div class="progress-item">
+                                    <span>فارسی</span>
+                                    <div class="progress">
+                                        <span style="width:89%"></span>
+                                    </div>
+                                    <span class="score">۱۷٫۸</span>
+                                </div>
+
+                                <div class="progress-item">
+                                    <span>زبان</span>
+                                    <div class="progress">
+                                        <span style="width:94%;background:var(--blue)"></span>
+                                    </div>
+                                    <span class="score">۱۸٫۸</span>
+                                </div>
+
+                            </div>
+
+                        </article>
+
+
+                        <!-- TODAY SCHEDULE -->
+
+                        <article class="card">
+
+                            <div class="card-head">
+                                <div>
+                                    <h3>برنامه امروز</h3>
+                                    <p>برنامه کلاس‌های فرزند شما</p>
+                                </div>
+
+                                <a class="btn" href="#schedule">برنامه کامل</a>
+                            </div>
+
+                            <div class="table-wrap">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>ساعت</th>
+                                            <th>درس</th>
+                                            <th>کلاس</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr>
+                                            <td>۰۸:۰۰</td>
+                                            <td>ریاضی</td>
+                                            <td>کلاس ۲۰۴</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>۰۹:۰۰</td>
+                                            <td>علوم</td>
+                                            <td>آزمایشگاه</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>۱۰:۳۰</td>
+                                            <td>فارسی</td>
+                                            <td>کلاس ۲۰۴</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </article>
+
+                    </div>
+
+
+                    <!-- ACTIVITIES -->
 
                     <article class="card">
+
                         <div class="card-head">
                             <div>
-                                <h3>وضعیت دروس</h3>
-                                <p>آخرین میانگین ثبت‌شده برای هر درس</p>
+                                <h3>آخرین فعالیت‌ها</h3>
+                                <p>رویدادهای ثبت‌شده برای فرزند شما</p>
                             </div>
-                            <span class="pill">نیم‌سال اول</span>
                         </div>
 
                         <div class="card-body">
-                            <div class="progress-item">
-                                <span>ریاضی</span>
-                                <div class="progress"><span style="width:92%"></span></div>
-                                <span class="score">۱۸٫۴</span>
+
+                            <div class="activity">
+                                <div class="activity-icon">✓</div>
+                                <div>
+                                    <strong>نمره علوم ثبت شد</strong>
+                                    <small>امروز · آزمون فصل چهارم</small>
+                                </div>
+                                <span class="pill green">۱۹٫۵</span>
                             </div>
 
-                            <div class="progress-item">
-                                <span>علوم</span>
-                                <div class="progress"><span style="width:96%;background:var(--green)"></span></div>
-                                <span class="score">۱۹٫۲</span>
+                            <div class="activity">
+                                <div class="activity-icon">✎</div>
+                                <div>
+                                    <strong>تکلیف ریاضی اضافه شد</strong>
+                                    <small>دیروز · مهلت تحویل فردا</small>
+                                </div>
                             </div>
 
-                            <div class="progress-item">
-                                <span>فارسی</span>
-                                <div class="progress"><span style="width:89%"></span></div>
-                                <span class="score">۱۷٫۸</span>
+                            <div class="activity">
+                                <div class="activity-icon">◷</div>
+                                <div>
+                                    <strong>حضور آرین ثبت شد</strong>
+                                    <small>دیروز · ساعت ۰۷:۴۵</small>
+                                </div>
                             </div>
 
-                            <div class="progress-item">
-                                <span>زبان</span>
-                                <div class="progress"><span style="width:94%;background:var(--blue)"></span></div>
-                                <span class="score">۱۸٫۸</span>
+                            <div class="activity">
+                                <div class="activity-icon">✉</div>
+                                <div>
+                                    <strong>پیام جدید از مدرسه</strong>
+                                    <small>۲ روز قبل · معاون آموزشی</small>
+                                </div>
                             </div>
+
                         </div>
-                    </article>
 
-                    <article class="card">
-                        <div class="card-head">
-                            <div>
-                                <h3>برنامه امروز</h3>
-                                <p>کلاس هشتم · کلاس ۸/۲</p>
-                            </div>
-                            <button class="btn secondary" data-go="schedule">برنامه کامل</button>
-                        </div>
-
-                        <div class="table-wrap">
-                            <table>
-                                <thead>
-                                    <tr><th>ساعت</th><th>درس</th><th>محل برگزاری</th></tr>
-                                </thead>
-                                <tbody>
-                                    <tr><td>۰۸:۰۰</td><td>ریاضی</td><td>کلاس ۲۰۴</td></tr>
-                                    <tr><td>۰۹:۰۰</td><td>علوم</td><td>آزمایشگاه</td></tr>
-                                    <tr><td>۱۰:۳۰</td><td>فارسی</td><td>کلاس ۲۰۴</td></tr>
-                                </tbody>
-                            </table>
-                        </div>
                     </article>
 
                 </div>
+
+            </section>
+
+
+            <!-- ATTENDANCE -->
+
+            <section class="section" id="attendance">
+
+                <div class="section-heading">
+                    <div>
+                        <h2>حضور و غیاب</h2>
+                        <p>گزارش حضور، غیبت و تأخیرهای فرزند شما</p>
+                    </div>
+
+                    <span class="pill green">گزارش ماهانه</span>
+                </div>
+
+
+                <div class="grid stats">
+
+                    <article class="card stat">
+                        <div class="stat-label">روزهای حاضر</div>
+                        <div class="stat-value" style="color:var(--green)">۲۲</div>
+                        <div class="stat-note">در ماه جاری</div>
+                    </article>
+
+                    <article class="card stat">
+                        <div class="stat-label">روزهای غیبت</div>
+                        <div class="stat-value" style="color:var(--red)">۲</div>
+                        <div class="stat-note">یک مورد با هماهنگی</div>
+                    </article>
+
+                    <article class="card stat">
+                        <div class="stat-label">تأخیر</div>
+                        <div class="stat-value" style="color:var(--orange)">۱</div>
+                        <div class="stat-note">کمتر از ۱۵ دقیقه</div>
+                    </article>
+
+                    <article class="card stat">
+                        <div class="stat-label">درصد حضور</div>
+                        <div class="stat-value">۹۶٪</div>
+                        <div class="stat-note">از ابتدای سال تحصیلی</div>
+                    </article>
+
+                </div>
+
 
                 <article class="card">
+
                     <div class="card-head">
                         <div>
-                            <h3>آخرین فعالیت‌ها</h3>
-                            <p>رویدادهای ثبت‌شده برای فرزند شما</p>
+                            <h3>سوابق حضور و غیاب</h3>
+                            <p>آبان ۱۴۰۵</p>
                         </div>
                     </div>
 
-                    <div class="card-body">
-                        <div class="activity">
-                            <div class="activity-icon">✓</div>
-                            <div>
-                                <strong>نمره علوم ثبت شد</strong>
-                                <small>امروز · آزمون فصل چهارم</small>
-                            </div>
-                            <span class="pill green">۱۹٫۵</span>
-                        </div>
+                    <div class="table-wrap">
 
-                        <div class="activity">
-                            <div class="activity-icon">✎</div>
-                            <div>
-                                <strong>تکلیف ریاضی اضافه شد</strong>
-                                <small>دیروز · مهلت تحویل فردا</small>
-                            </div>
-                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>تاریخ</th>
+                                    <th>روز</th>
+                                    <th>ساعت ورود</th>
+                                    <th>وضعیت</th>
+                                    <th>توضیحات</th>
+                                </tr>
+                            </thead>
 
-                        <div class="activity">
-                            <div class="activity-icon">◷</div>
-                            <div>
-                                <strong>حضور آرین ثبت شد</strong>
-                                <small>دیروز · ساعت ۰۷:۴۵</small>
-                            </div>
-                        </div>
+                            <tbody>
+                                <tr>
+                                    <td>۲۶ آبان</td>
+                                    <td>سه‌شنبه</td>
+                                    <td>۰۷:۴۵</td>
+                                    <td><span class="pill green">حاضر</span></td>
+                                    <td>به‌موقع</td>
+                                </tr>
 
-                        <div class="activity">
-                            <div class="activity-icon">✉</div>
-                            <div>
-                                <strong>پیام جدید از مدرسه</strong>
-                                <small>۲ روز قبل · معاون آموزشی</small>
-                            </div>
+                                <tr>
+                                    <td>۲۵ آبان</td>
+                                    <td>دوشنبه</td>
+                                    <td>۰۷:۴۸</td>
+                                    <td><span class="pill green">حاضر</span></td>
+                                    <td>به‌موقع</td>
+                                </tr>
+
+                                <tr>
+                                    <td>۲۴ آبان</td>
+                                    <td>یکشنبه</td>
+                                    <td>۰۸:۰۸</td>
+                                    <td><span class="pill orange">با تأخیر</span></td>
+                                    <td>۸ دقیقه تأخیر</td>
+                                </tr>
+
+                                <tr>
+                                    <td>۲۰ آبان</td>
+                                    <td>چهارشنبه</td>
+                                    <td>—</td>
+                                    <td><span class="pill red">غایب</span></td>
+                                    <td>ثبت مرخصی</td>
+                                </tr>
+
+                                <tr>
+                                    <td>۱۸ آبان</td>
+                                    <td>دوشنبه</td>
+                                    <td>—</td>
+                                    <td><span class="pill red">غایب</span></td>
+                                    <td>نیازمند بررسی</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </article>
+
+            </section>
+
+
+            <!-- GRADES -->
+
+            <section class="section" id="grades">
+
+                <div class="section-heading">
+                    <div>
+                        <h2>نمرات و کارنامه</h2>
+                        <p>عملکرد درسی و ارزیابی‌های ثبت‌شده</p>
+                    </div>
+
+                    <span class="pill purple">نیم‌سال اول ۱۴۰۵</span>
+                </div>
+
+
+                <div class="grid grade-cards">
+
+                    <article class="card grade-card">
+                        <small>میانگین کل</small>
+                        <strong>۱۸٫۷۵</strong>
+                        <span class="pill green">خیلی خوب</span>
+                    </article>
+
+                    <article class="card grade-card">
+                        <small>بالاترین نمره</small>
+                        <strong>۱۹٫۵</strong>
+                        <span class="pill green">علوم</span>
+                    </article>
+
+                    <article class="card grade-card">
+                        <small>نیازمند تمرین بیشتر</small>
+                        <strong>۱۷٫۸</strong>
+                        <span class="pill orange">فارسی</span>
+                    </article>
+
+                </div>
+
+
+                <article class="card">
+
+                    <div class="card-head">
+                        <div>
+                            <h3>ریز نمرات دروس</h3>
+                            <p>نمرات نمونه ثبت‌شده در نیم‌سال</p>
                         </div>
                     </div>
+
+                    <div class="table-wrap">
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>درس</th>
+                                    <th>مستمر</th>
+                                    <th>آزمون</th>
+                                    <th>فعالیت کلاسی</th>
+                                    <th>میانگین</th>
+                                    <th>وضعیت</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td><strong>ریاضی</strong></td>
+                                    <td>۱۸</td>
+                                    <td>۱۹</td>
+                                    <td>۱۸٫۲</td>
+                                    <td>۱۸٫۴</td>
+                                    <td><span class="pill green">خیلی خوب</span></td>
+                                </tr>
+
+                                <tr>
+                                    <td><strong>علوم</strong></td>
+                                    <td>۱۹</td>
+                                    <td>۱۹٫۵</td>
+                                    <td>۱۹</td>
+                                    <td>۱۹٫۲</td>
+                                    <td><span class="pill green">عالی</span></td>
+                                </tr>
+
+                                <tr>
+                                    <td><strong>فارسی</strong></td>
+                                    <td>۱۸</td>
+                                    <td>۱۷</td>
+                                    <td>۱۸٫۴</td>
+                                    <td>۱۷٫۸</td>
+                                    <td><span class="pill orange">خوب</span></td>
+                                </tr>
+
+                                <tr>
+                                    <td><strong>زبان انگلیسی</strong></td>
+                                    <td>۱۹</td>
+                                    <td>۱۸</td>
+                                    <td>۱۹٫۴</td>
+                                    <td>۱۸٫۸</td>
+                                    <td><span class="pill green">خیلی خوب</span></td>
+                                </tr>
+
+                                <tr>
+                                    <td><strong>مطالعات اجتماعی</strong></td>
+                                    <td>۱۸٫۵</td>
+                                    <td>۱۹</td>
+                                    <td>۱۸</td>
+                                    <td>۱۸٫۵</td>
+                                    <td><span class="pill green">خیلی خوب</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+
                 </article>
 
-            </div>
+            </section>
 
-            <p class="demo-note">ⓘ اطلاعات این صفحه نمونه و نمایشی هستند.</p>
-        </section>
 
-        <!-- ATTENDANCE -->
+            <!-- SCHEDULE -->
 
-        <section class="page" id="view-attendance">
+            <section class="section" id="schedule">
 
-            <div class="intro">
-                <div>
-                    <h2>حضور و غیاب</h2>
-                    <p>گزارش حضور، غیبت و تأخیرهای فرزند شما</p>
+                <div class="section-heading">
+                    <div>
+                        <h2>برنامه هفتگی</h2>
+                        <p>برنامه کلاس‌های پایه هشتم · کلاس ۸/۲</p>
+                    </div>
                 </div>
 
-                <select class="filter" id="attendanceFilter">
-                    <option value="all">همه وضعیت‌ها</option>
-                    <option value="present">حاضر</option>
-                    <option value="absent">غایب</option>
-                    <option value="late">با تأخیر</option>
-                </select>
-            </div>
 
-            <div class="grid stats">
-                <article class="card stat">
-                    <div class="stat-label">روزهای حاضر</div>
-                    <div class="stat-value">۲۲</div>
-                </article>
-                <article class="card stat">
-                    <div class="stat-label">روزهای غیبت</div>
-                    <div class="stat-value" style="color:var(--red)">۲</div>
-                </article>
-                <article class="card stat">
-                    <div class="stat-label">تأخیر</div>
-                    <div class="stat-value" style="color:var(--orange)">۱</div>
-                </article>
-                <article class="card stat">
-                    <div class="stat-label">درصد حضور</div>
-                    <div class="stat-value" style="color:var(--green)">۹۶٪</div>
-                </article>
-            </div>
+                <article class="card">
 
-            <article class="card">
-                <div class="card-head">
-                    <h3>سوابق حضور و غیاب</h3>
-                    <button class="btn secondary" onclick="window.print()">چاپ گزارش</button>
-                </div>
+                    <div class="card-head">
+                        <div>
+                            <h3>جدول هفتگی کلاس‌ها</h3>
+                            <p>برنامه نمونه برای نمایش اولیه</p>
+                        </div>
 
-                <div class="table-wrap">
-                    <table id="attendanceTable">
-                        <thead>
-                            <tr>
-                                <th>تاریخ</th>
-                                <th>روز</th>
-                                <th>ساعت ورود</th>
-                                <th>وضعیت</th>
-                                <th>توضیحات</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr data-status="present">
-                                <td>۲۶ آبان</td><td>سه‌شنبه</td><td>۰۷:۴۵</td>
-                                <td><span class="pill green">حاضر</span></td><td>به‌موقع</td>
-                            </tr>
-                            <tr data-status="present">
-                                <td>۲۵ آبان</td><td>دوشنبه</td><td>۰۷:۴۸</td>
-                                <td><span class="pill green">حاضر</span></td><td>به‌موقع</td>
-                            </tr>
-                            <tr data-status="late">
-                                <td>۲۴ آبان</td><td>یکشنبه</td><td>۰۸:۰۸</td>
-                                <td><span class="pill orange">با تأخیر</span></td><td>۸ دقیقه تأخیر</td>
-                            </tr>
-                            <tr data-status="absent">
-                                <td>۲۰ آبان</td><td>چهارشنبه</td><td>—</td>
-                                <td><span class="pill red">غایب</span></td><td>ثبت مرخصی</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </article>
-        </section>
+                        <span class="pill purple">۱۴۰۵–۱۴۰۶</span>
+                    </div>
 
-        <!-- GRADES -->
+                    <div class="table-wrap">
 
-        <section class="page" id="view-grades">
+                        <table class="schedule-table">
+                            <thead>
+                                <tr>
+                                    <th>ساعت</th>
+                                    <th>شنبه</th>
+                                    <th>یکشنبه</th>
+                                    <th>دوشنبه</th>
+                                    <th>سه‌شنبه</th>
+                                    <th>چهارشنبه</th>
+                                </tr>
+                            </thead>
 
-            <div class="intro">
-                <div>
-                    <h2>نمرات و کارنامه</h2>
-                    <p>عملکرد درسی و ارزیابی‌های ثبت‌شده</p>
-                </div>
-                <span class="pill">نیم‌سال اول ۱۴۰۵</span>
-            </div>
+                            <tbody>
+                                <tr>
+                                    <th>۰۸:۰۰</th>
+                                    <td><strong>ریاضی</strong><small>آقای رضایی</small></td>
+                                    <td><strong>علوم</strong><small>خانم احمدی</small></td>
+                                    <td><strong>فارسی</strong><small>خانم کریمی</small></td>
+                                    <td><strong>ریاضی</strong><small>آقای رضایی</small></td>
+                                    <td><strong>زبان</strong><small>خانم نوری</small></td>
+                                </tr>
 
-            <div class="grid grade-cards">
-                <article class="card grade-card">
-                    <small>میانگین کل</small>
-                    <strong>۱۸٫۷۵</strong>
-                    <span class="pill green">خیلی خوب</span>
+                                <tr>
+                                    <th>۰۹:۰۰</th>
+                                    <td><strong>علوم</strong><small>خانم احمدی</small></td>
+                                    <td><strong>ورزش</strong><small>آقای مرادی</small></td>
+                                    <td><strong>ریاضی</strong><small>آقای رضایی</small></td>
+                                    <td><strong>فارسی</strong><small>خانم کریمی</small></td>
+                                    <td><strong>علوم</strong><small>خانم احمدی</small></td>
+                                </tr>
+
+                                <tr>
+                                    <th>۱۰:۱۵</th>
+                                    <td><strong>زبان</strong><small>خانم نوری</small></td>
+                                    <td><strong>ریاضی</strong><small>آقای رضایی</small></td>
+                                    <td><strong>مطالعات</strong><small>آقای حیدری</small></td>
+                                    <td><strong>علوم</strong><small>خانم احمدی</small></td>
+                                    <td><strong>فارسی</strong><small>خانم کریمی</small></td>
+                                </tr>
+
+                                <tr>
+                                    <th>۱۱:۱۵</th>
+                                    <td><strong>مطالعات</strong><small>آقای حیدری</small></td>
+                                    <td><strong>فارسی</strong><small>خانم کریمی</small></td>
+                                    <td><strong>هنر</strong><small>خانم موسوی</small></td>
+                                    <td><strong>ورزش</strong><small>آقای مرادی</small></td>
+                                    <td><strong>ریاضی</strong><small>آقای رضایی</small></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+
                 </article>
 
-                <article class="card grade-card">
-                    <small>بالاترین نمره</small>
-                    <strong>۱۹٫۵</strong>
-                    <span class="pill green">علوم</span>
-                </article>
+            </section>
 
-                <article class="card grade-card">
-                    <small>نیازمند تمرین بیشتر</small>
-                    <strong>۱۷٫۸</strong>
-                    <span class="pill orange">فارسی</span>
-                </article>
-            </div>
 
-            <article class="card">
-                <div class="card-head"><h3>ریز نمرات دروس</h3></div>
+            <!-- HOMEWORK -->
 
-                <div class="table-wrap">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>درس</th><th>مستمر</th><th>آزمون</th>
-                                <th>فعالیت کلاسی</th><th>میانگین</th><th>وضعیت</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>ریاضی</td><td>۱۸</td><td>۱۹</td><td>۱۸٫۲</td><td>۱۸٫۴</td><td><span class="pill green">خیلی خوب</span></td></tr>
-                            <tr><td>علوم</td><td>۱۹</td><td>۱۹٫۵</td><td>۱۹</td><td>۱۹٫۲</td><td><span class="pill green">عالی</span></td></tr>
-                            <tr><td>فارسی</td><td>۱۸</td><td>۱۷</td><td>۱۸٫۴</td><td>۱۷٫۸</td><td><span class="pill orange">خوب</span></td></tr>
-                            <tr><td>زبان انگلیسی</td><td>۱۹</td><td>۱۸</td><td>۱۹٫۴</td><td>۱۸٫۸</td><td><span class="pill green">خیلی خوب</span></td></tr>
-                            <tr><td>مطالعات اجتماعی</td><td>۱۸٫۵</td><td>۱۹</td><td>۱۸</td><td>۱۸٫۵</td><td><span class="pill green">خیلی خوب</span></td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </article>
-        </section>
+            <section class="section" id="homework">
 
-        <!-- SCHEDULE -->
-
-        <section class="page" id="view-schedule">
-
-            <div class="intro">
-                <div>
-                    <h2>برنامه هفتگی</h2>
-                    <p>برنامه کلاس‌های پایه هشتم · کلاس ۸/۲</p>
-                </div>
-            </div>
-
-            <article class="card">
-                <div class="card-head"><h3>جدول هفتگی کلاس‌ها</h3></div>
-
-                <div class="table-wrap">
-                    <table class="schedule-table">
-                        <thead>
-                            <tr>
-                                <th>ساعت</th><th>شنبه</th><th>یکشنبه</th>
-                                <th>دوشنبه</th><th>سه‌شنبه</th><th>چهارشنبه</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th>۰۸:۰۰</th>
-                                <td>ریاضی</td><td>علوم</td><td>فارسی</td><td>ریاضی</td><td>زبان</td>
-                            </tr>
-                            <tr>
-                                <th>۰۹:۰۰</th>
-                                <td>علوم</td><td>ورزش</td><td>ریاضی</td><td>فارسی</td><td>علوم</td>
-                            </tr>
-                            <tr>
-                                <th>۱۰:۱۵</th>
-                                <td>زبان</td><td>ریاضی</td><td>مطالعات</td><td>علوم</td><td>فارسی</td>
-                            </tr>
-                            <tr>
-                                <th>۱۱:۱۵</th>
-                                <td>مطالعات</td><td>فارسی</td><td>هنر</td><td>ورزش</td><td>ریاضی</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </article>
-        </section>
-
-        <!-- HOMEWORK -->
-
-        <section class="page" id="view-homework">
-
-            <div class="intro">
-                <div>
-                    <h2>تکالیف و فعالیت‌ها</h2>
-                    <p>تکالیف تعیین‌شده و مهلت تحویل آن‌ها</p>
+                <div class="section-heading">
+                    <div>
+                        <h2>تکالیف و فعالیت‌ها</h2>
+                        <p>تکالیف تعیین‌شده و مهلت تحویل آن‌ها</p>
+                    </div>
                 </div>
 
-                <select class="filter" id="homeworkFilter">
-                    <option value="all">همه تکالیف</option>
-                    <option value="open">در انتظار انجام</option>
-                    <option value="done">انجام‌شده</option>
-                </select>
-            </div>
 
-            <div id="taskList">
-
-                <article class="card task" data-task="open">
-                    <input type="checkbox">
+                <article class="card task">
+                    <div class="task-icon">✎</div>
                     <div>
                         <strong>حل تمرین‌های صفحه ۶۸ ریاضی</strong>
                         <p>فصل چهارم · آقای رضایی</p>
                         <div class="task-meta">
                             <span class="pill orange">مهلت: فردا</span>
                             <span class="pill">ریاضی</span>
+                            <span class="pill red">در انتظار انجام</span>
                         </div>
                     </div>
                 </article>
 
-                <article class="card task" data-task="open">
-                    <input type="checkbox">
+
+                <article class="card task">
+                    <div class="task-icon">📚</div>
                     <div>
                         <strong>خلاصه‌نویسی درس پنجم علوم</strong>
                         <p>حداکثر یک صفحه · خانم احمدی</p>
                         <div class="task-meta">
                             <span class="pill red">مهلت: امروز</span>
                             <span class="pill green">علوم</span>
+                            <span class="pill red">در انتظار انجام</span>
                         </div>
                     </div>
                 </article>
 
-                <article class="card task" data-task="done">
-                    <input type="checkbox" checked>
+
+                <article class="card task">
+                    <div class="task-icon">✓</div>
                     <div>
                         <strong>روخوانی درس ششم فارسی</strong>
                         <p>ثبت تکمیل توسط دانش‌آموز · خانم کریمی</p>
@@ -1364,411 +1706,355 @@ td {
                     </div>
                 </article>
 
-                <article class="card task" data-task="open">
-                    <input type="checkbox">
+
+                <article class="card task">
+                    <div class="task-icon">✎</div>
                     <div>
                         <strong>تمرین واژگان درس سوم زبان</strong>
                         <p>صفحه ۳۲ کتاب کار · خانم نوری</p>
                         <div class="task-meta">
                             <span class="pill orange">مهلت: شنبه</span>
-                            <span class="pill">زبان انگلیسی</span>
+                            <span class="pill blue">زبان انگلیسی</span>
+                            <span class="pill red">در انتظار انجام</span>
                         </div>
                     </div>
                 </article>
 
-            </div>
-        </section>
+            </section>
 
-        <!-- MESSAGES -->
 
-        <section class="page" id="view-messages">
+            <!-- MESSAGES -->
 
-            <div class="intro">
-                <div>
-                    <h2>پیام به مدرسه</h2>
-                    <p>ارتباط با معلمان و کادر اجرایی مدرسه</p>
+            <section class="section" id="messages">
+
+                <div class="section-heading">
+                    <div>
+                        <h2>پیام به مدرسه</h2>
+                        <p>ارتباط با معلمان و کادر اجرایی مدرسه</p>
+                    </div>
                 </div>
-            </div>
 
-            <div class="messages">
 
-                <article class="card contacts">
-                    <button class="contact active">
-                        <span class="avatar">م</span>
-                        <span><strong>معاون آموزشی</strong><small>آخرین پیام: امروز</small></span>
-                    </button>
+                <div class="messages">
 
-                    <button class="contact">
-                        <span class="avatar">ر</span>
-                        <span><strong>آقای رضایی · ریاضی</strong><small>۲ روز پیش</small></span>
-                    </button>
+                    <article class="card contacts">
 
-                    <button class="contact">
-                        <span class="avatar">ا</span>
-                        <span><strong>خانم احمدی · علوم</strong><small>۵ روز پیش</small></span>
-                    </button>
-                </article>
-
-                <article class="card chat">
-                    <div class="chat-head">گفتگو با معاون آموزشی</div>
-
-                    <div class="chat-body" id="chatBody">
-                        <div class="bubble">
-                            سلام و وقت بخیر. کارنامه میان‌ترم آرین در پنل ثبت شد.
+                        <div class="contact">
+                            <span class="contact-avatar">م</span>
+                            <span>
+                                <strong>معاون آموزشی</strong>
+                                <small>آخرین پیام: امروز</small>
+                            </span>
                         </div>
 
-                        <div class="bubble mine">
-                            ممنون از اطلاع‌رسانی شما. سپاسگزارم.
+                        <div class="contact">
+                            <span class="contact-avatar">ر</span>
+                            <span>
+                                <strong>آقای رضایی · ریاضی</strong>
+                                <small>۲ روز پیش</small>
+                            </span>
                         </div>
-                    </div>
 
-                    <form class="chat-form" id="messageForm">
-                        <input id="messageInput" placeholder="پیام خود را بنویسید..." required>
-                        <button class="btn" type="submit">ارسال پیام</button>
-                    </form>
-                </article>
+                        <div class="contact">
+                            <span class="contact-avatar">ا</span>
+                            <span>
+                                <strong>خانم احمدی · علوم</strong>
+                                <small>۵ روز پیش</small>
+                            </span>
+                        </div>
 
-            </div>
+                    </article>
 
-            <p class="demo-note">ⓘ پیام‌ها در این نسخه آزمایشی فقط در صفحه نمایش داده می‌شوند.</p>
-        </section>
 
-        <!-- FINANCE -->
+                    <article class="card">
 
-        <section class="page" id="view-finance">
+                        <div class="card-head">
+                            <div>
+                                <h3>گفتگو با معاون آموزشی</h3>
+                                <p>سوابق پیام‌های نمونه</p>
+                            </div>
+                        </div>
 
-            <div class="intro">
-                <div>
-                    <h2>شهریه و پرداخت‌ها</h2>
-                    <p>وضعیت مالی و سوابق پرداخت</p>
+                        <div class="card-body">
+
+                            <div class="chat-message">
+                                سلام و وقت بخیر. کارنامه میان‌ترم آرین در پنل ثبت شد.
+                                در صورت داشتن سؤال در خدمت شما هستیم.
+                                <small>امروز · ۰۹:۲۰</small>
+                            </div>
+
+                            <div class="chat-message mine">
+                                ممنون از اطلاع‌رسانی شما. سپاسگزارم.
+                                <small>امروز · ۰۹:۴۵</small>
+                            </div>
+
+                            <div class="info-note">
+                                این بخش فعلاً فقط سوابق نمونه را نمایش می‌دهد.
+                                ارسال و دریافت پیام واقعی بعد از اتصال سامانه پیام‌رسان انجام می‌شود.
+                            </div>
+
+                        </div>
+
+                    </article>
+
                 </div>
 
-                <button class="btn secondary" onclick="window.print()">چاپ صورتحساب</button>
-            </div>
+            </section>
 
-            <div class="grid finance-grid">
-                <article class="card finance-card">
-                    <small>کل شهریه سالانه</small>
-                    <strong>۱۲٬۰۰۰٬۰۰۰</strong>
-                    <span class="pill">تومان</span>
-                </article>
 
-                <article class="card finance-card">
-                    <small>مبلغ پرداخت‌شده</small>
-                    <strong style="color:var(--green)">۱۰٬۸۰۰٬۰۰۰</strong>
-                    <span class="pill green">۹۰٪ پرداخت شده</span>
-                </article>
+            <!-- FINANCE -->
 
-                <article class="card finance-card">
-                    <small>مانده قابل پرداخت</small>
-                    <strong style="color:var(--orange)">۱٬۲۰۰٬۰۰۰</strong>
-                    <span class="pill orange">تومان</span>
-                </article>
-            </div>
+            <section class="section" id="finance">
 
-            <article class="card">
-                <div class="card-head"><h3>تاریخچه پرداخت‌ها</h3></div>
-
-                <div class="table-wrap">
-                    <table>
-                        <thead>
-                            <tr><th>شناسه</th><th>تاریخ</th><th>شرح</th><th>مبلغ</th><th>وضعیت</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>#۱۴۰۵۰۱</td><td>۱۵ مهر</td><td>قسط اول شهریه</td><td>۴ میلیون</td><td><span class="pill green">پرداخت‌شده</span></td></tr>
-                            <tr><td>#۱۴۰۵۰۲</td><td>۱۵ آبان</td><td>قسط دوم شهریه</td><td>۳٫۴ میلیون</td><td><span class="pill green">پرداخت‌شده</span></td></tr>
-                            <tr><td>#۱۴۰۵۰۳</td><td>۲۵ آبان</td><td>تسویه بخشی از شهریه</td><td>۳٫۴ میلیون</td><td><span class="pill green">پرداخت‌شده</span></td></tr>
-                            <tr><td>#۱۴۰۵۰۴</td><td>۱۰ آذر</td><td>مانده شهریه</td><td>۱٫۲ میلیون</td><td><span class="pill orange">در انتظار پرداخت</span></td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </article>
-
-            <p class="demo-note">ⓘ درگاه پرداخت در نسخه فعلی فعال نیست.</p>
-        </section>
-
-        <!-- NOTIFICATIONS -->
-
-        <section class="page" id="view-notifications">
-
-            <div class="intro">
-                <div>
-                    <h2>اطلاعیه‌ها</h2>
-                    <p>اخبار و پیام‌های رسمی مدرسه</p>
-                </div>
-
-                <button class="btn secondary" id="markAllRead">خواندن همه اطلاعیه‌ها</button>
-            </div>
-
-            <article class="card" id="noticeList">
-
-                <div class="notice unread">
-                    <div class="notice-icon">📢</div>
+                <div class="section-heading">
                     <div>
-                        <strong>برگزاری جلسه اولیا و مربیان</strong>
-                        <p>جلسه اولیا و مربیان روز دوشنبه ساعت ۱۶ در سالن اجتماعات مدرسه برگزار می‌شود.</p>
-                        <small>امروز · معاونت آموزشی</small>
+                        <h2>شهریه و پرداخت‌ها</h2>
+                        <p>وضعیت مالی و سوابق پرداخت مربوط به فرزند شما</p>
                     </div>
+
+                    <span class="pill orange">مانده پرداختی</span>
                 </div>
 
-                <div class="notice unread">
-                    <div class="notice-icon">📅</div>
-                    <div>
-                        <strong>تغییر برنامه امتحانات</strong>
-                        <p>برنامه آزمون‌های میان‌ترم به‌روزرسانی شده است.</p>
-                        <small>دیروز · دفتر مدرسه</small>
-                    </div>
+
+                <div class="grid finance-grid">
+
+                    <article class="card finance-card">
+                        <small>کل شهریه سالانه</small>
+                        <strong>۱۲٬۰۰۰٬۰۰۰</strong>
+                        <span class="pill purple">تومان</span>
+                    </article>
+
+                    <article class="card finance-card">
+                        <small>مبلغ پرداخت‌شده</small>
+                        <strong style="color:var(--green)">۱۰٬۸۰۰٬۰۰۰</strong>
+                        <span class="pill green">۹۰٪ پرداخت شده</span>
+                    </article>
+
+                    <article class="card finance-card">
+                        <small>مانده قابل پرداخت</small>
+                        <strong style="color:var(--orange)">۱٬۲۰۰٬۰۰۰</strong>
+                        <span class="pill orange">تومان</span>
+                    </article>
+
                 </div>
 
-                <div class="notice unread">
-                    <div class="notice-icon">💳</div>
-                    <div>
-                        <strong>یادآوری پرداخت شهریه</strong>
-                        <p>لطفاً مانده شهریه را تا تاریخ ۱۰ آذر تعیین تکلیف فرمایید.</p>
-                        <small>۲ روز قبل · امور مالی</small>
-                    </div>
-                </div>
-
-                <div class="notice">
-                    <div class="notice-icon">🏫</div>
-                    <div>
-                        <strong>آغاز فعالیت فوق برنامه</strong>
-                        <p>ثبت‌نام کلاس‌های فوق برنامه از هفته آینده آغاز خواهد شد.</p>
-                        <small>۵ روز قبل · پرورشی</small>
-                    </div>
-                </div>
-
-            </article>
-        </section>
-
-        <!-- PROFILE -->
-
-        <section class="page" id="view-profile">
-
-            <div class="intro">
-                <div>
-                    <h2>اطلاعات والد</h2>
-                    <p>مشاهده اطلاعات حساب کاربری</p>
-                </div>
-            </div>
-
-            <div class="profile">
-
-                <article class="card profile-card">
-                    <div class="avatar">ر‌م</div>
-                    <h3>رضا محمدی</h3>
-                    <p>والد دانش‌آموز · آرین محمدی</p>
-                    <span class="pill green">حساب فعال</span>
-                </article>
 
                 <article class="card">
-                    <div class="card-head"><h3>اطلاعات تماس</h3></div>
 
-                    <form class="fields" id="profileForm">
-
-                        <div class="field">
-                            <label>نام و نام خانوادگی</label>
-                            <input value="رضا محمدی">
+                    <div class="card-head">
+                        <div>
+                            <h3>تاریخچه پرداخت‌ها</h3>
+                            <p>سوابق نمونه برای نمایش اولیه</p>
                         </div>
 
-                        <div class="field">
-                            <label>شماره همراه</label>
-                            <input value="09121234567">
-                        </div>
+                        <a href="#dashboard" class="btn">بازگشت به بالا</a>
+                    </div>
 
-                        <div class="field">
-                            <label>ایمیل</label>
-                            <input type="email" value="reza@example.com">
-                        </div>
+                    <div class="table-wrap">
 
-                        <div class="field">
-                            <label>نسبت با دانش‌آموز</label>
-                            <input value="پدر">
-                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>شناسه</th>
+                                    <th>تاریخ</th>
+                                    <th>شرح</th>
+                                    <th>مبلغ</th>
+                                    <th>وضعیت</th>
+                                </tr>
+                            </thead>
 
-                        <div style="grid-column:1/-1">
-                            <button class="btn" type="submit">ذخیره تغییرات</button>
-                        </div>
+                            <tbody>
+                                <tr>
+                                    <td>#۱۴۰۵۰۱</td>
+                                    <td>۱۵ مهر ۱۴۰۵</td>
+                                    <td>قسط اول شهریه</td>
+                                    <td>۴٬۰۰۰٬۰۰۰ تومان</td>
+                                    <td><span class="pill green">پرداخت‌شده</span></td>
+                                </tr>
 
-                    </form>
+                                <tr>
+                                    <td>#۱۴۰۵۰۲</td>
+                                    <td>۱۵ آبان ۱۴۰۵</td>
+                                    <td>قسط دوم شهریه</td>
+                                    <td>۳٬۴۰۰٬۰۰۰ تومان</td>
+                                    <td><span class="pill green">پرداخت‌شده</span></td>
+                                </tr>
+
+                                <tr>
+                                    <td>#۱۴۰۵۰۳</td>
+                                    <td>۲۵ آبان ۱۴۰۵</td>
+                                    <td>تسویه بخشی از شهریه</td>
+                                    <td>۳٬۴۰۰٬۰۰۰ تومان</td>
+                                    <td><span class="pill green">پرداخت‌شده</span></td>
+                                </tr>
+
+                                <tr>
+                                    <td>#۱۴۰۵۰۴</td>
+                                    <td>۱۰ آذر ۱۴۰۵</td>
+                                    <td>مانده شهریه</td>
+                                    <td>۱٬۲۰۰٬۰۰۰ تومان</td>
+                                    <td><span class="pill orange">در انتظار پرداخت</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+
                 </article>
 
+            </section>
+
+
+            <!-- NOTIFICATIONS -->
+
+            <section class="section" id="notifications">
+
+                <div class="section-heading">
+                    <div>
+                        <h2>اطلاعیه‌ها</h2>
+                        <p>اخبار و پیام‌های رسمی مدرسه</p>
+                    </div>
+                </div>
+
+
+                <article class="card">
+
+                    <div class="notice">
+                        <div class="notice-icon">📢</div>
+                        <div>
+                            <strong>برگزاری جلسه اولیا و مربیان</strong>
+                            <p>
+                                جلسه اولیا و مربیان روز دوشنبه ساعت ۱۶
+                                در سالن اجتماعات مدرسه برگزار می‌شود.
+                            </p>
+                            <small>امروز · معاونت آموزشی</small>
+                        </div>
+                    </div>
+
+                    <div class="notice">
+                        <div class="notice-icon">📅</div>
+                        <div>
+                            <strong>تغییر برنامه امتحانات</strong>
+                            <p>
+                                برنامه آزمون‌های میان‌ترم به‌روزرسانی شده است.
+                            </p>
+                            <small>دیروز · دفتر مدرسه</small>
+                        </div>
+                    </div>
+
+                    <div class="notice">
+                        <div class="notice-icon">💳</div>
+                        <div>
+                            <strong>یادآوری پرداخت شهریه</strong>
+                            <p>
+                                لطفاً مانده شهریه را تا تاریخ ۱۰ آذر تعیین تکلیف فرمایید.
+                            </p>
+                            <small>۲ روز قبل · امور مالی</small>
+                        </div>
+                    </div>
+
+                    <div class="notice">
+                        <div class="notice-icon">🏫</div>
+                        <div>
+                            <strong>آغاز فعالیت فوق برنامه</strong>
+                            <p>
+                                ثبت‌نام کلاس‌های فوق برنامه از هفته آینده آغاز خواهد شد.
+                            </p>
+                            <small>۵ روز قبل · معاونت پرورشی</small>
+                        </div>
+                    </div>
+
+                </article>
+
+            </section>
+
+
+            <!-- PROFILE -->
+
+            <section class="section" id="profile">
+
+                <div class="section-heading">
+                    <div>
+                        <h2>اطلاعات والد</h2>
+                        <p>مشاهده اطلاعات حساب کاربری و دانش‌آموز</p>
+                    </div>
+                </div>
+
+
+                <div class="profile">
+
+                    <article class="card profile-card">
+                        <div class="profile-large">ر‌م</div>
+
+                        <h3>رضا محمدی</h3>
+
+                        <p>والد دانش‌آموز · آرین محمدی</p>
+
+                        <span class="pill green">حساب فعال</span>
+                    </article>
+
+
+                    <article class="card">
+
+                        <div class="card-head">
+                            <div>
+                                <h3>اطلاعات تماس و حساب</h3>
+                                <p>اطلاعات نمونه حساب کاربری</p>
+                            </div>
+                        </div>
+
+                        <div class="profile-fields">
+
+                            <div class="field">
+                                <label>نام و نام خانوادگی</label>
+                                <div class="field-value">رضا محمدی</div>
+                            </div>
+
+                            <div class="field">
+                                <label>شماره همراه</label>
+                                <div class="field-value">۰۹۱۲۱۲۳۴۵۶۷</div>
+                            </div>
+
+                            <div class="field">
+                                <label>ایمیل</label>
+                                <div class="field-value">reza@example.com</div>
+                            </div>
+
+                            <div class="field">
+                                <label>نسبت با دانش‌آموز</label>
+                                <div class="field-value">پدر</div>
+                            </div>
+
+                            <div class="field">
+                                <label>نام دانش‌آموز</label>
+                                <div class="field-value">آرین محمدی</div>
+                            </div>
+
+                            <div class="field">
+                                <label>کلاس تحصیلی</label>
+                                <div class="field-value">هشتم / ۲</div>
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+            </section>
+
+
+            <div class="demo-note">
+                ⓘ اطلاعات این نسخه نمایشی هستند و هنوز به پایگاه داده متصل نشده‌اند.
             </div>
-        </section>
 
-    </div>
-</main>
+        </div>
 
-<div class="toast" id="toast"></div>
+        <footer class="footer">
+            سامانه مدیریت هوشمند مدرسه · پنل والدین
+        </footer>
 
-<script>
-const titles = {
-    dashboard: ["نمای کلی", "گزارش وضعیت تحصیلی فرزند شما"],
-    attendance: ["حضور و غیاب", "گزارش حضور و غیبت"],
-    grades: ["نمرات و کارنامه", "عملکرد درسی دانش‌آموز"],
-    schedule: ["برنامه هفتگی", "برنامه کلاس‌های دانش‌آموز"],
-    homework: ["تکالیف و فعالیت‌ها", "تکالیف و مهلت تحویل"],
-    messages: ["پیام به مدرسه", "ارتباط با معلمان و کادر اجرایی"],
-    finance: ["شهریه و پرداخت‌ها", "وضعیت مالی دانش‌آموز"],
-    notifications: ["اطلاعیه‌ها", "اخبار رسمی مدرسه"],
-    profile: ["اطلاعات والد", "اطلاعات حساب کاربری"]
-};
-
-const toastBox = document.getElementById("toast");
-let toastTimer;
-
-function showToast(message) {
-    toastBox.textContent = message;
-    toastBox.classList.add("show");
-
-    clearTimeout(toastTimer);
-
-    toastTimer = setTimeout(() => {
-        toastBox.classList.remove("show");
-    }, 2500);
-}
-
-// تغییر صفحات پنل
-function showPage(pageName) {
-    if (!titles[pageName]) return;
-
-    document.querySelectorAll(".page").forEach(page => {
-        page.classList.toggle(
-            "active",
-            page.id === "view-" + pageName
-        );
-    });
-
-    document.querySelectorAll(".nav-menu button[data-view]").forEach(button => {
-        button.classList.toggle(
-            "active",
-            button.dataset.view === pageName
-        );
-    });
-
-    document.getElementById("pageTitle").textContent = titles[pageName][0];
-    document.getElementById("pageSubtitle").textContent = titles[pageName][1];
-
-    document.getElementById("sidebar").classList.remove("open");
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-}
-
-document.querySelectorAll("[data-view]").forEach(button => {
-    button.addEventListener("click", () => {
-        showPage(button.dataset.view);
-    });
-});
-
-document.querySelectorAll("[data-go]").forEach(button => {
-    button.addEventListener("click", () => {
-        showPage(button.dataset.go);
-    });
-});
-
-// منوی موبایل
-document.getElementById("menuToggle").addEventListener("click", () => {
-    document.getElementById("sidebar").classList.toggle("open");
-});
-
-// انتخاب فرزند
-document.getElementById("childSelect").addEventListener("click", () => {
-    showToast("امکان انتخاب چند فرزند در نسخه بعدی اضافه می‌شود.");
-});
-
-// فیلتر حضور و غیاب
-document.getElementById("attendanceFilter").addEventListener("change", event => {
-    const selected = event.target.value;
-
-    document.querySelectorAll("#attendanceTable tbody tr").forEach(row => {
-        row.hidden = selected !== "all" && row.dataset.status !== selected;
-    });
-});
-
-// فیلتر تکالیف
-document.getElementById("homeworkFilter").addEventListener("change", event => {
-    const selected = event.target.value;
-
-    document.querySelectorAll("#taskList .task").forEach(task => {
-        task.hidden = selected !== "all" && task.dataset.task !== selected;
-    });
-});
-
-// تغییر وضعیت تکالیف
-document.querySelectorAll(".task input").forEach(checkbox => {
-    checkbox.addEventListener("change", () => {
-        const task = checkbox.closest(".task");
-        const status = task.querySelector(".pill");
-
-        task.dataset.task = checkbox.checked ? "done" : "open";
-
-        status.textContent = checkbox.checked
-            ? "انجام‌شده"
-            : "در انتظار انجام";
-
-        status.className = checkbox.checked
-            ? "pill green"
-            : "pill orange";
-
-        showToast("وضعیت تکلیف به‌روزرسانی شد.");
-    });
-});
-
-// ارسال پیام نمایشی
-document.getElementById("messageForm").addEventListener("submit", event => {
-    event.preventDefault();
-
-    const input = document.getElementById("messageInput");
-    const message = input.value.trim();
-
-    if (!message) return;
-
-    const bubble = document.createElement("div");
-
-    bubble.className = "bubble mine";
-    bubble.textContent = message;
-
-    document.getElementById("chatBody").appendChild(bubble);
-
-    input.value = "";
-
-    showToast("پیام در پیش‌نمایش نمایش داده شد؛ هنوز ارسال واقعی انجام نمی‌شود.");
-});
-
-// علامت‌گذاری اطلاعیه‌ها
-document.getElementById("markAllRead").addEventListener("click", () => {
-    document.querySelectorAll(".notice").forEach(notice => {
-        notice.classList.remove("unread");
-    });
-
-    document.getElementById("noticeCount").hidden = true;
-
-    showToast("همه اطلاعیه‌ها خوانده‌شده علامت خوردند.");
-});
-
-// ذخیره نمایشی اطلاعات پروفایل
-document.getElementById("profileForm").addEventListener("submit", event => {
-    event.preventDefault();
-
-    showToast("تغییرات در این نسخه نمایشی ثبت شدند.");
-});
-
-// مخاطبان پیام
-document.querySelectorAll(".contact").forEach(contact => {
-    contact.addEventListener("click", () => {
-        document.querySelectorAll(".contact").forEach(item => {
-            item.classList.remove("active");
-        });
-
-        contact.classList.add("active");
-
-        showToast("گفتگوی مخاطب انتخاب شد.");
-    });
-});
-</script>
+    </main>
 
 </body>
 </html>
