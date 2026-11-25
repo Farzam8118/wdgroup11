@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#111d34">
+    <title>مدیریت مدرسه | پنل مدیریت</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --navy: #111d34;
+            --purple: #6558d3;
+            --purple-light: #f0efff;
+            --bg: #f5f7fb;
+            --border: #e8edf4;
+            --muted: #8490a3;
+            --text: #1b2840;
+            --green: #129b83;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 95px;
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: "Vazirmatn", Tahoma, sans-serif;
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button, input, select {
+            font: inherit;
+        }
+
+        .sidebar {
+            width: 260px;
+            height: 100vh;
+            position: fixed;
+            right: 0;
+            top: 0;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            padding: 23px 16px;
+            overflow-y: auto;
+            color: #d8e0ed;
+            background: linear-gradient(180deg, #14213b, #0c172b);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0 10px 25px;
+            border-bottom: 1px solid #ffffff13;
+        }
+
+        .brand-logo {
+            width: 43px;
+            height: 43px;
+            display: grid;
+            place-items: center;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #9287ff, #6255cf);
+            color: white;
+            font-size: 21px;
+            font-weight: 900;
+        }
+
+        .brand-name {
+            color: white;
+            font-size: 15px;
+            font-weight: 900;
+        }
+
+        .brand-caption {
+            color: #8999b2;
+            font-size: 10px;
+        }
+
+        .nav-caption {
+            padding: 20px 12px 8px;
+            color: #7889a4;
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+        .nav-list {
+            display: grid;
+            gap: 5px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            color: #adbad0;
+            font-size: 11px;
+            font-weight: 600;
+            transition: .2s;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: white;
+            background: #766be044;
+        }
+
+        .nav-link.active {
+            border-right: 3px solid #a49bff;
+        }
+
+        .nav-symbol {
+            width: 20px;
+            text-align: center;
+            color: #9c9abf;
+            font-size: 16px;
+        }
+
+        .sidebar-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: auto;
+            padding: 20px 8px 0;
+            border-top: 1px solid #ffffff13;
+        }
+
+        .avatar {
+            width: 37px;
+            height: 37px;
+            display: grid;
+            place-items: center;
+            flex-shrink: 0;
+            border-radius: 12px;
+            background: #e9e7ff;
+            color: #5b50c3;
+            font-weight: 900;
+        }
+
+        .sidebar-profile strong {
+            display: block;
+            color: white;
+            font-size: 11px;
+        }
+
+        .sidebar-profile small {
+            color: #8999b2;
+            font-size: 9px;
+        }
+
+        .main {
+            width: calc(100% - 260px);
+            margin-right: 260px;
+            min-width: 0;
+        }
+
+        .topbar {
+            height: 76px;
+            position: sticky;
+            top: 0;
+            z-index: 5;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+            border-bottom: 1px solid var(--border);
+            background: #ffffffed;
+            backdrop-filter: blur(12px);
+        }
+
+        .search-box {
+            position: relative;
+            width: 290px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px 38px 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            outline: none;
+            background: #f8f9fc;
+            font-size: 10px;
+        }
+
+        .search-box span {
+            position: absolute;
+            right: 12px;
+            top: 5px;
+            color: var(--muted);
+            font-size: 17px;
+        }
+
+        .topbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .icon-button {
+            width: 38px;
+            height: 38px;
+            display: grid;
+            place-items: center;
+            border: 1px solid var(--border);
+            border-radius: 11px;
+            background: white;
+            color: #65748a;
+            font-size: 17px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+        }
+
+        .user-info strong {
+            display: block;
+            font-size: 10px;
+        }
+
+        .user-info small {
+            color: var(--muted);
+            font-size: 9px;
+        }
+
+        .content {
+            max-width: 1500px;
+            margin: auto;
+            padding: 28px 32px 45px;
+        }
+
+        .page-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 23px;
+        }
+
+        .eyebrow {
+            color: var(--purple);
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+        h1 {
+            margin: 3px 0;
+            font-size: 22px;
+            font-weight: 900;
+        }
+
+        .page-description {
+            color: var(--muted);
+            font-size: 10px;
+        }
+
+        .button {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            padding: 9px 13px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            background: white;
+            color: #526078;
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+        .button-primary {
+            border-color: var(--purple);
+            background: var(--purple);
+            color: white;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 14px;
+            margin-bottom: 17px;
+        }
+
+        .stat-card,
+        .card {
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            background: white;
+            box-shadow: 0 8px 26px #1a2b4708;
+        }
+
+        .stat-card {
+            padding: 17px;
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .stat-icon {
+            width: 39px;
+            height: 39px;
+            display: grid;
+            place-items: center;
+            border-radius: 12px;
+            font-size: 17px;
+        }
+
+        .icon-purple {
+            background: #f0efff;
+            color: #6558d3;
+        }
+
+        .icon-green {
+            background: #e8f7f3;
+            color: #129b83;
+        }
+
+        .icon-orange {
+            background: #fff4e3;
+            color: #d58a23;
+        }
+
+        .icon-blue {
+            background: #edf4ff;
+            color: #477ed7;
+        }
+
+        .stat-trend {
+            padding: 3px 7px;
+            border-radius: 20px;
+            background: #e8f7f3;
+            color: #129b83;
+            font-size: 9px;
+            font-weight: 800;
+        }
+
+        .stat-label {
+            color: var(--muted);
+            font-size: 10px;
+        }
+
+        .stat-number {
+            margin-top: 3px;
+            font-size: 25px;
+            font-weight: 900;
+        }
+
+        .stat-note {
+            margin-top: 5px;
+            color: #9aa4b3;
+            font-size: 9px;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 16px;
+            margin-bottom: 17px;
+        }
+
+        .card {
+            padding: 19px;
+            margin-bottom: 17px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 17px;
+        }
+
+        .card-title {
+            margin: 0;
+            font-size: 12px;
+            font-weight: 900;
+        }
+
+        .card-description {
+            color: var(--muted);
+            font-size: 9px;
+        }
+
+        .text-link {
+            color: var(--purple);
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+        .chart {
+            height: 190px;
+            display: flex;
+            align-items: flex-end;
+            gap: 12px;
+            padding: 10px 5px 24px;
+            border-bottom: 1px solid var(--border);
+            background: repeating-linear-gradient(
+                to bottom,
+                transparent 0,
+                transparent 45px,
+                #eff1f5 46px,
+                #eff1f5 47px
+            );
+        }
+
+        .chart-column {
+            height: 100%;
+            flex: 1;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            position: relative;
+        }
+
+        .chart-bar {
+            width: 27px;
+            min-height: 5px;
+            border-radius: 7px 7px 2px 2px;
+            background: linear-gradient(180deg, #988ef3, #6558d3);
+        }
+
+        .chart-bar.green {
+            background: linear-gradient(180deg, #65cabb, #129b83);
+        }
+
+        .chart-label {
+            position: absolute;
+            bottom: -23px;
+            color: var(--muted);
+            font-size: 9px;
+        }
+
+        .chart-legend {
+            display: flex;
+            gap: 18px;
+            margin-top: 13px;
+            color: var(--muted);
+            font-size: 9px;
+        }
+
+        .legend-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            margin-left: 5px;
+            border-radius: 50%;
+        }
+
+        .attendance-layout {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 8px 0 13px;
+        }
+
+        .attendance-ring {
+            width: 125px;
+            height: 125px;
+            flex-shrink: 0;
+            display: grid;
+            place-items: center;
+            position: relative;
+            border-radius: 50%;
+            background: conic-gradient(
+                #6558d3 0 72%,
+                #129b83 72% 91%,
+                #e8b45c 91% 97%,
+                #edf0f5 97% 100%
+            );
+        }
+
+        .attendance-ring::before {
+            content: "";
+            width: 91px;
+            height: 91px;
+            position: absolute;
+            border-radius: 50%;
+            background: white;
+        }
+
+        .ring-text {
+            position: relative;
+            text-align: center;
+        }
+
+        .ring-text strong {
+            display: block;
+            font-size: 22px;
+            font-weight: 900;
+        }
+
+        .ring-text small {
+            color: var(--muted);
+            font-size: 9px;
+        }
+
+        .legend-list {
+            display: grid;
+            flex: 1;
+            gap: 10px;
+        }
+
+        .legend-item {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            font-size: 9px;
+        }
+
+        .legend-item strong {
+            font-size: 10px;
+        }
+
+        .schedule-item {
+            display: grid;
+            grid-template-columns: 48px 4px 1fr auto;
+            align-items: center;
+            gap: 10px;
+            padding: 11px 0;
+            border-bottom: 1px solid #f0f2f6;
+        }
+
+        .schedule-item:last-child {
+            border-bottom: 0;
+        }
+
+        .schedule-time {
+            color: var(--muted);
+            font-size: 9px;
+            direction: ltr;
+        }
+
+        .schedule-line {
+            height: 37px;
+            border-radius: 5px;
+            background: var(--purple);
+        }
+
+        .schedule-item:nth-child(2) .schedule-line {
+            background: var(--green);
+        }
+
+        .schedule-item:nth-child(3) .schedule-line {
+            background: #d58a23;
+        }
+
+        .schedule-item:nth-child(4) .schedule-line {
+            background: #477ed7;
+        }
+
+        .schedule-info strong {
+            display: block;
+            font-size: 10px;
+        }
+
+        .schedule-info small {
+            color: var(--muted);
+            font-size: 9px;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 9px;
+            font-weight: 800;
+        }
+
+        .status-green {
+            background: #e8f7f3;
+            color: #129b83;
+        }
+
+        .status-orange {
+            background: #fff4e3;
+            color: #bb7b1e;
+        }
+
+        .status-red {
+            background: #fff0f0;
+            color: #d95d65;
+        }
+
+        .status-blue {
+            background: #edf4ff;
+            color: #477ed7;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            white-space: nowrap;
+        }
+
+        th {
+            padding: 11px;
+            background: #fafbfc;
+            border-bottom: 1px solid var(--border);
+            color: #8793a5;
+            text-align: right;
+            font-size: 9px;
+            font-weight: 800;
+        }
+
+        td {
+            padding: 12px 11px;
+            border-bottom: 1px solid #f0f2f6;
+            color: #526078;
+            font-size: 10px;
+        }
+
+        tr:last-child td {
+            border-bottom: 0;
+        }
+
+        .student-info {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+        }
+
+        .student-info strong {
+            display: block;
+            color: var(--text);
+            font-size: 10px;
+        }
+
+        .student-info small {
+            display: block;
+            color: var(--muted);
+            font-size: 9px;
+        }
+
+        .announcement {
+            display: flex;
+            gap: 11px;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f2f6;
+        }
+
+        .announcement:last-child {
+            border-bottom: 0;
+        }
+
+        .announcement-icon {
+            width: 34px;
+            height: 34px;
+            display: grid;
+            place-items: center;
+            flex-shrink: 0;
+            border-radius: 10px;
+            background: var(--purple-light);
+            color: var(--purple);
+            font-size: 15px;
+        }
+
+        .announcement strong {
+            display: block;
+            font-size: 10px;
+        }
+
+        .announcement p {
+            margin: 2px 0;
+            color: var(--muted);
+            font-size: 9px;
+        }
+
+        .announcement time {
+            color: #a1aab7;
+            font-size: 8px;
+        }
+
+        .module-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 13px;
+        }
+
+        .module-card {
+            padding: 16px;
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            background: white;
+        }
+
+        .module-card h3 {
+            margin: 0 0 5px;
+            font-size: 11px;
+            font-weight: 900;
+        }
+
+        .module-card p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 9px;
+        }
+
+        .module-number {
+            margin-top: 10px;
+            color: var(--purple);
+            font-size: 20px;
+            font-weight: 900;
+        }
+
+        .section-heading {
+            margin: 28px 0 13px;
+            font-size: 15px;
+            font-weight: 900;
+        }
+
+        .footer {
+            padding: 20px 0;
+            color: #9aa4b3;
+            text-align: center;
+            font-size: 9px;
+        }
+
+        @media (max-width: 1100px) {
+            .sidebar {
+                width: 225px;
+            }
+
+            .main {
+                width: calc(100% - 225px);
+                margin-right: 225px;
+            }
+
+            .content {
+                padding: 23px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .module-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 760px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                padding: 14px;
+            }
+
+            .brand {
+                padding-bottom: 13px;
+            }
+
+            .nav-caption,
+            .sidebar-profile {
+                display: none;
+            }
+
+            .nav-list {
+                display: flex;
+                gap: 6px;
+                padding-top: 12px;
+                overflow-x: auto;
+            }
+
+            .nav-link {
+                flex-shrink: 0;
+                padding: 8px 10px;
+                font-size: 10px;
+            }
+
+            .main {
+                width: 100%;
+                margin-right: 0;
+            }
+
+            .topbar {
+                height: 62px;
+                padding: 0 14px;
+            }
+
+            .content {
+                padding: 20px 13px 30px;
+            }
+
+            .page-heading {
+                flex-direction: column;
+            }
+
+            .search-box {
+                display: none;
+            }
+
+            .stats-grid {
+                gap: 9px;
+            }
+
+            .stat-card {
+                padding: 12px;
+            }
+
+            .stat-number {
+                font-size: 21px;
+            }
+
+            .card {
+                padding: 14px;
+            }
+
+            .module-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .attendance-layout {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .legend-list {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- منوی اصلی -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-logo">م</div>
+            <div>
+                <div class="brand-name">مدرسه هوشمند</div>
+                <div class="brand-caption">سامانه مدیریت آموزشی</div>
+            </div>
+        </div>
+
+        <div class="nav-caption">مدیریت اصلی</div>
+
+        <nav class="nav-list">
+            <a href="#dashboard" class="nav-link active">
+                <span class="nav-symbol">⌂</span>
+                داشبورد
+            </a>
+
+            <a href="#students" class="nav-link">
+                <span class="nav-symbol">♙</span>
+                دانش‌آموزان
+            </a>
+
+            <a href="#teachers" class="nav-link">
+                <span class="nav-symbol">♧</span>
+                معلمان
+            </a>
+
+            <a href="#parents" class="nav-link">
+                <span class="nav-symbol">♧</span>
+                اولیا
+            </a>
+
+            <a href="#classes" class="nav-link">
+                <span class="nav-symbol">▤</span>
+                کلاس‌ها و دروس
+            </a>
+
+            <a href="#attendance" class="nav-link">
+                <span class="nav-symbol">◷</span>
+                حضور و غیاب
+            </a>
+
+            <a href="#grades" class="nav-link">
+                <span class="nav-symbol">✎</span>
+                نمرات و امتحانات
+            </a>
+
+            <a href="#schedule" class="nav-link">
+                <span class="nav-symbol">▦</span>
+                برنامه هفتگی
+            </a>
+
+            <a href="#announcements" class="nav-link">
+                <span class="nav-symbol">◉</span>
+                اطلاعیه‌ها
+            </a>
+
+            <a href="#reports" class="nav-link">
+                <span class="nav-symbol">▥</span>
+                گزارش‌ها
+            </a>
+        </nav>
+
+        <div class="sidebar-profile">
+            <div class="avatar">م‌م</div>
+            <div>
+                <strong>مدیریت مدرسه</strong>
+                <small>مدیر سامانه</small>
+            </div>
+        </div>
+
+    </aside>
+
+    <!-- محتوای اصلی -->
+    <main class="main">
+
+        <header class="topbar">
+
+            <div class="search-box">
+                <span>⌕</span>
+                <input type="search" placeholder="جستجو در سامانه...">
+            </div>
+
+            <div class="topbar-actions">
+                <a href="#announcements" class="icon-button" aria-label="اطلاعیه‌ها">♧</a>
+
+                <div class="user-info">
+                    <div class="avatar">م‌م</div>
+                    <div>
+                        <strong>مدیریت مدرسه</strong>
+                        <small>پنل مدیر</small>
+                    </div>
+                </div>
+            </div>
+
+        </header>
+
+        <div class="content">
+
+            <!-- داشبورد -->
+            <section id="dashboard">
+
+                <div class="page-heading">
+                    <div>
+                        <div class="eyebrow">پنل مدیریت مدرسه</div>
+                        <h1>داشبورد مدیریتی</h1>
+                        <div class="page-description">
+                            نمای کلی وضعیت آموزشی و اجرایی مدرسه
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap gap-2">
+                        <a href="#reports" class="button">مشاهده گزارش‌ها</a>
+                        <a href="#students" class="button button-primary">+ دانش‌آموزان</a>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+
+                    <article class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon icon-purple">♙</div>
+                            <span class="stat-trend">فعال</span>
+                        </div>
+                        <div class="stat-label">تعداد دانش‌آموزان</div>
+                        <div class="stat-number">۱٬۲۴۸</div>
+                        <div class="stat-note">در مجموع تمام پایه‌های تحصیلی</div>
+                    </article>
+
+                    <article class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon icon-green">♧</div>
+                            <span class="stat-trend">فعال</span>
+                        </div>
+                        <div class="stat-label">تعداد معلمان</div>
+                        <div class="stat-number">۶۸</div>
+                        <div class="stat-note">کادر آموزشی مدرسه</div>
+                    </article>
+
+                    <article class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon icon-orange">▤</div>
+                            <span class="stat-trend">۱۲ پایه</span>
+                        </div>
+                        <div class="stat-label">کلاس‌های فعال</div>
+                        <div class="stat-number">۳۲</div>
+                        <div class="stat-note">در مقاطع و پایه‌های مختلف</div>
+                    </article>
+
+                    <article class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon icon-blue">◷</div>
+                            <span class="stat-trend">امروز</span>
+                        </div>
+                        <div class="stat-label">میانگین حضور</div>
+                        <div class="stat-number">۹۳٫۴٪</div>
+                        <div class="stat-note">نسبت حضور ثبت‌شده دانش‌آموزان</div>
+                    </article>
+
+                </div>
+
+                <div class="dashboard-grid">
+
+                    <!-- نمودار آموزشی -->
+                    <article class="card">
+
+                        <div class="card-header">
+                            <div>
+                                <h2 class="card-title">آمار عملکرد آموزشی</h2>
+                                <div class="card-description">
+                                    مقایسه روند عملکرد در ماه‌های اخیر
+                                </div>
+                            </div>
+                            <span class="status status-blue">گزارش سالانه</span>
+                        </div>
+
+                        <div class="chart">
+
+                            <div class="chart-column">
+                                <div class="chart-bar" style="height:48%"></div>
+                                <span class="chart-label">مهر</span>
+                            </div>
+
+                            <div class="chart-column">
+                                <div class="chart-bar green" style="height:65%"></div>
+                                <span class="chart-label">آبان</span>
+                            </div>
+
+                            <div class="chart-column">
+                                <div class="chart-bar" style="height:58%"></div>
+                                <span class="chart-label">آذر</span>
+                            </div>
+
+                            <div class="chart-column">
+                                <div class="chart-bar green" style="height:78%"></div>
+                                <span class="chart-label">دی</span>
+                            </div>
+
+                            <div class="chart-column">
+                                <div class="chart-bar" style="height:71%"></div>
+                                <span class="chart-label">بهمن</span>
+                            </div>
+
+                            <div class="chart-column">
+                                <div class="chart-bar green" style="height:88%"></div>
+                                <span class="chart-label">اسفند</span>
+                            </div>
+
+                        </div>
+
+                        <div class="chart-legend">
+                            <span><i class="legend-dot" style="background:#6558d3"></i>عملکرد آموزشی</span>
+                            <span><i class="legend-dot" style="background:#129b83"></i>میانگین حضور</span>
+                        </div>
+
+                    </article>
+
+                    <!-- آمار حضور -->
+                    <article class="card">
+
+                        <div class="card-header">
+                            <div>
+                                <h2 class="card-title">وضعیت حضور و غیاب</h2>
+                                <div class="card-description">گزارش نمونه امروز</div>
+                            </div>
+                            <a href="#attendance" class="text-link">جزئیات ←</a>
+                        </div>
+
+                        <div class="attendance-layout">
+
+                            <div class="attendance-ring">
+                                <div class="ring-text">
+                                    <strong>۹۳٫۴٪</strong>
+                                    <small>حضور</small>
+                                </div>
+                            </div>
+
+                            <div class="legend-list">
+
+                                <div class="legend-item">
+                                    <span><i class="legend-dot" style="background:#6558d3"></i>حاضر</span>
+                                    <strong>۹۳۴</strong>
+                                </div>
+
+                                <div class="legend-item">
+                                    <span><i class="legend-dot" style="background:#129b83"></i>غایب</span>
+                                    <strong>۱۲۴</strong>
+                                </div>
+
+                                <div class="legend-item">
+                                    <span><i class="legend-dot" style="background:#e8b45c"></i>تأخیر</span>
+                                    <strong>۶۰</strong>
+                                </div>
+
+                                <div class="legend-item">
+                                    <span><i class="legend-dot" style="background:#edf0f5"></i>ثبت‌نشده</span>
+                                    <strong>۱۲</strong>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+                <!-- برنامه امروز و اطلاعیه -->
+                <div class="dashboard-grid">
+
+                    <article class="card">
+
+                        <div class="card-header">
+                            <div>
+                                <h2 class="card-title">برنامه امروز مدرسه</h2>
+                                <div class="card-description">برنامه نمونه کلاس‌ها</div>
+                            </div>
+                            <a href="#schedule" class="text-link">برنامه کامل ←</a>
+                        </div>
+
+                        <div class="schedule-item">
+                            <span class="schedule-time">08:00</span>
+                            <div class="schedule-line"></div>
+                            <div class="schedule-info">
+                                <strong>ریاضی</strong>
+                                <small>پایه دهم · کلاس ۱۰۱</small>
+                            </div>
+                            <span class="status status-green">برگزار شده</span>
+                        </div>
+
+                        <div class="schedule-item">
+                            <span class="schedule-time">09:30</span>
+                            <div class="schedule-line"></div>
+                            <div class="schedule-info">
+                                <strong>فیزیک</strong>
+                                <small>پایه یازدهم · کلاس ۲۰۲</small>
+                            </div>
+                            <span class="status status-green">برگزار شده</span>
+                        </div>
+
+                        <div class="schedule-item">
+                            <span class="schedule-time">11:00</span>
+                            <div class="schedule-line"></div>
+                            <div class="schedule-info">
+                                <strong>ادبیات فارسی</strong>
+                                <small>پایه دوازدهم · کلاس ۳۰۱</small>
+                            </div>
+                            <span class="status status-orange">در انتظار</span>
+                        </div>
+
+                        <div class="schedule-item">
+                            <span class="schedule-time">12:30</span>
+                            <div class="schedule-line"></div>
+                            <div class="schedule-info">
+                                <strong>زبان انگلیسی</strong>
+                                <small>پایه دهم · کلاس ۱۰۲</small>
+                            </div>
+                            <span class="status status-blue">برنامه‌ریزی‌شده</span>
+                        </div>
+
+                    </article>
+
+                    <article class="card" id="announcements">
+
+                        <div class="card-header">
+                            <div>
+                                <h2 class="card-title">اطلاعیه‌های مدرسه</h2>
+                                <div class="card-description">آخرین اخبار و پیام‌ها</div>
+                            </div>
+                            <a href="#announcements-list" class="text-link">همه اطلاعیه‌ها ←</a>
+                        </div>
+
+                        <div class="announcement">
+                            <div class="announcement-icon">▣</div>
+                            <div>
+                                <strong>برگزاری آزمون میان‌ترم</strong>
+                                <p>برنامه امتحانات میان‌ترم در سامانه قرار گرفت.</p>
+                                <time>امروز · ۰۹:۳۰</time>
+                            </div>
+                        </div>
+
+                        <div class="announcement">
+                            <div class="announcement-icon">◷</div>
+                            <div>
+                                <strong>یادآوری جلسه اولیا</strong>
+                                <p>جلسه ماهانه اولیا و مربیان برگزار خواهد شد.</p>
+                                <time>دیروز · ۱۲:۰۰</time>
+                            </div>
+                        </div>
+
+                        <div class="announcement">
+                            <div class="announcement-icon">✎</div>
+                            <div>
+                                <strong>ثبت نمرات دانش‌آموزان</strong>
+                                <p>مهلت ثبت نمرات این دوره اعلام شده است.</p>
+                                <time>دو روز پیش</time>
+                            </div>
+                        </div>
+
+                    </article>
+
+                </div>
+
+                <!-- دانش آموزان -->
+                <article class="card" id="students">
+
+                    <div class="card-header">
+                        <div>
+                            <h2 class="card-title">آخرین دانش‌آموزان ثبت‌شده</h2>
+                            <div class="card-description">نمونه اطلاعات پرونده دانش‌آموزان</div>
+                        </div>
+                        <a href="#students" class="text-link">مشاهده همه ←</a>
+                    </div>
+
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>دانش‌آموز</th>
+                                    <th>شماره دانش‌آموزی</th>
+                                    <th>پایه</th>
+                                    <th>کلاس</th>
+                                    <th>وضعیت</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="student-info">
+                                            <div class="avatar">م‌ر</div>
+                                            <strong>محمد رضایی</strong>
+                                        </div>
+                                    </td>
+                                    <td>۱۴۰۵۱۰۰۱</td>
+                                    <td>دهم</td>
+                                    <td>۱۰۱</td>
+                                    <td><span class="status status-green">فعال</span></td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div class="student-info">
+                                            <div class="avatar">ع‌م</div>
+                                            <strong>علی محمدی</strong>
+                                        </div>
+                                    </td>
+                                    <td>۱۴۰۵۱۰۰۲</td>
+                                    <td>یازدهم</td>
+                                    <td>۲۰۲</td>
+                                    <td><span class="status status-green">فعال</span></td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div class="student-info">
+                                            <div class="avatar">س‌ک</div>
+                                            <strong>سینا کریمی</strong>
+                                        </div>
+                                    </td>
+                                    <td>۱۴۰۵۱۰۰۳</td>
+                                    <td>دوازدهم</td>
+                                    <td>۳۰۱</td>
+                                    <td><span class="status status-orange">در انتظار بررسی</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </article>
+
+            </section>
+
+            <!-- بخش های مدیریتی -->
+            <h2 class="section-heading">دسترسی سریع به بخش‌های مدرسه</h2>
+
+            <div class="module-grid">
+
+                <a href="#students" class="module-card">
+                    <h3>مدیریت دانش‌آموزان</h3>
+                    <p>پرونده، ثبت‌نام و اطلاعات تحصیلی</p>
+                    <div class="module-number">۱٬۲۴۸</div>
+                </a>
+
+                <a href="#teachers" class="module-card">
+                    <h3>مدیریت معلمان</h3>
+                    <p>اطلاعات و وضعیت کادر آموزشی</p>
+                    <div class="module-number">۶۸</div>
+                </a>
+
+                <a href="#parents" class="module-card">
+                    <h3>مدیریت اولیا</h3>
+                    <p>اطلاعات والدین و ارتباط با مدرسه</p>
+                    <div class="module-number">۱٬۰۹۶</div>
+                </a>
+
+                <a href="#classes" class="module-card">
+                    <h3>کلاس‌ها و دروس</h3>
+                    <p>پایه‌ها، کلاس‌ها و فهرست دروس</p>
+                    <div class="module-number">۳۲</div>
+                </a>
+
+                <a href="#attendance" class="module-card">
+                    <h3>حضور و غیاب</h3>
+                    <p>گزارش حضور، غیبت و تأخیر</p>
+                    <div class="module-number">۹۳٫۴٪</div>
+                </a>
+
+                <a href="#grades" class="module-card">
+                    <h3>نمرات و امتحانات</h3>
+                    <p>سوابق نمرات و برنامه آزمون‌ها</p>
+                    <div class="module-number">۸۴</div>
+                </a>
+
+            </div>
+
+            <!-- معلمان -->
+            <section id="teachers">
+                <h2 class="section-heading">مدیریت معلمان</h2>
+                <article class="card">
+                    <div class="card-header">
+                        <div>
+                            <h2 class="card-title">کادر آموزشی مدرسه</h2>
+                            <div class="card-description">نمای کلی اطلاعات معلمان</div>
+                        </div>
+                    </div>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>نام معلم</th>
+                                    <th>درس</th>
+                                    <th>تعداد کلاس</th>
+                                    <th>وضعیت همکاری</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>خانم احمدی</td>
+                                    <td>ریاضی</td>
+                                    <td>۴</td>
+                                    <td><span class="status status-green">فعال</span></td>
+                                </tr>
+                                <tr>
+                                    <td>آقای موسوی</td>
+                                    <td>فیزیک</td>
+                                    <td>۳</td>
+                                    <td><span class="status status-green">فعال</span></td>
+                                </tr>
+                                <tr>
+                                    <td>خانم کریمی</td>
+                                    <td>ادبیات</td>
+                                    <td>۵</td>
+                                    <td><span class="status status-green">فعال</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </article>
+            </section>
+
+            <!-- اولیا -->
+            <section id="parents">
+                <h2 class="section-heading">مدیریت اولیا</h2>
+                <div class="module-grid">
+                    <div class="module-card">
+                        <h3>پرونده والدین</h3>
+                        <p>اطلاعات تماس و مشخصات اولیا</p>
+                        <div class="module-number">۱٬۰۹۶</div>
+                    </div>
+                    <div class="module-card">
+                        <h3>جلسات اولیا و مربیان</h3>
+                        <p>برنامه و سوابق جلسات مدرسه</p>
+                        <div class="module-number">۸</div>
+                    </div>
+                    <div class="module-card">
+                        <h3>پیام‌های والدین</h3>
+                        <p>پیگیری ارتباطات با مدرسه</p>
+                        <div class="module-number">۲۴</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- کلاس ها -->
+            <section id="classes">
+                <h2 class="section-heading">کلاس‌ها و دروس</h2>
+                <div class="module-grid">
+                    <div class="module-card">
+                        <h3>پایه دهم</h3>
+                        <p>کلاس‌های فعال این پایه</p>
+                        <div class="module-number">۱۲ کلاس</div>
+                    </div>
+                    <div class="module-card">
+                        <h3>پایه یازدهم</h3>
+                        <p>کلاس‌های فعال این پایه</p>
+                        <div class="module-number">۱۰ کلاس</div>
+                    </div>
+                    <div class="module-card">
+                        <h3>پایه دوازدهم</h3>
+                        <p>کلاس‌های فعال این پایه</p>
+                        <div class="module-number">۱۰ کلاس</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- حضور و غیاب -->
+            <section id="attendance">
+                <h2 class="section-heading">گزارش حضور و غیاب</h2>
+                <article class="card">
+                    <div class="card-header">
+                        <div>
+                            <h2 class="card-title">وضعیت روزانه دانش‌آموزان</h2>
+                            <div class="card-description">آمار نمونه برای نمایش وضعیت ثبت حضور</div>
+                        </div>
+                        <span class="status status-green">گزارش روزانه</span>
+                    </div>
+                    <div class="module-grid">
+                        <div class="module-card">
+                            <h3>حاضر</h3>
+                            <div class="module-number">۹۳۴</div>
+                        </div>
+                        <div class="module-card">
+                            <h3>غایب</h3>
+                            <div class="module-number">۱۲۴</div>
+                        </div>
+                        <div class="module-card">
+                            <h3>دارای تأخیر</h3>
+                            <div class="module-number">۶۰</div>
+                        </div>
+                    </div>
+                </article>
+            </section>
+
+            <!-- نمرات -->
+            <section id="grades">
+                <h2 class="section-heading">نمرات و امتحانات</h2>
+                <div class="module-grid">
+                    <div class="module-card">
+                        <h3>آزمون‌های برگزارشده</h3>
+                        <p>آزمون‌های ثبت‌شده در سامانه</p>
+                        <div class="module-number">۲۴</div>
+                    </div>
+                    <div class="module-card">
+                        <h3>نمرات ثبت‌شده</h3>
+                        <p>سوابق ثبت نمرات دانش‌آموزان</p>
+                        <div class="module-number">۸۴٪</div>
+                    </div>
+                    <div class="module-card">
+                        <h3>آزمون‌های پیش‌رو</h3>
+                        <p>برنامه امتحانات آینده</p>
+                        <div class="module-number">۶</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- برنامه هفتگی -->
+            <section id="schedule">
+                <h2 class="section-heading">برنامه هفتگی</h2>
+                <article class="card">
+                    <div class="card-header">
+                        <div>
+                            <h2 class="card-title">برنامه نمونه کلاس‌ها</h2>
+                            <div class="card-description">نمایش زمان‌بندی دروس</div>
+                        </div>
+                    </div>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>روز</th>
+                                    <th>ساعت اول</th>
+                                    <th>ساعت دوم</th>
+                                    <th>ساعت سوم</th>
+                                    <th>ساعت چهارم</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>شنبه</td>
+                                    <td>ریاضی</td>
+                                    <td>فیزیک</td>
+                                    <td>ادبیات</td>
+                                    <td>زبان</td>
+                                </tr>
+                                <tr>
+                                    <td>یکشنبه</td>
+                                    <td>شیمی</td>
+                                    <td>ریاضی</td>
+                                    <td>دینی</td>
+                                    <td>ورزش</td>
+                                </tr>
+                                <tr>
+                                    <td>دوشنبه</td>
+                                    <td>فیزیک</td>
+                                    <td>زبان</td>
+                                    <td>زیست</td>
+                                    <td>ادبیات</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </article>
+            </section>
+
+            <!-- اطلاعیه ها -->
+            <section id="announcements-list">
+                <h2 class="section-heading">اطلاعیه‌های مدرسه</h2>
+                <article class="card">
+                    <div class="announcement">
+                        <div class="announcement-icon">▣</div>
+                        <div>
+                            <strong>برگزاری آزمون میان‌ترم</strong>
+                            <p>برنامه امتحانات میان‌ترم در سامانه قرار گرفت.</p>
+                            <time>امروز</time>
+                        </div>
+                    </div>
+                    <div class="announcement">
+                        <div class="announcement-icon">◷</div>
+                        <div>
+                            <strong>جلسه اولیا و مربیان</strong>
+                            <p>جلسه ماهانه اولیا و مربیان در سالن اجتماعات برگزار می‌شود.</p>
+                            <time>دیروز</time>
+                        </div>
+                    </div>
+                </article>
+            </section>
+
+            <!-- گزارش ها -->
+            <section id="reports">
+                <h2 class="section-heading">گزارش‌های مدیریتی</h2>
+                <div class="module-grid">
+                    <div class="module-card">
+                        <h3>گزارش تحصیلی</h3>
+                        <p>بررسی وضعیت عملکرد آموزشی</p>
+                    </div>
+                    <div class="module-card">
+                        <h3>گزارش حضور و غیاب</h3>
+                        <p>آمار غیبت و تأخیر دانش‌آموزان</p>
+                    </div>
+                    <div class="module-card">
+                        <h3>گزارش کلاس‌ها</h3>
+                        <p>وضعیت کلاس‌ها و ظرفیت آموزشی</p>
+                    </div>
+                </div>
+            </section>
+
+            <footer class="footer">
+                سامانه مدیریت مدرسه · پنل مدیریت
+            </footer>
+
+        </div>
+    </main>
+
+</div>
+
+</body>
+</html>
