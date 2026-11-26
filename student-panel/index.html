@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#111827">
+  <title>پنل دانش‌آموز | مدرسه هوشمند</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Vazirmatn", sans-serif;
+      background: #f4f6fb;
+      color: #202a3b;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr);
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      background: #111827;
+      color: #d1d5db;
+      padding: 26px 18px;
+      min-height: 100vh;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: white;
+      font-size: 21px;
+      font-weight: 800;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 13px;
+      border-radius: 12px;
+      color: #aeb8c9;
+      font-size: 13px;
+      transition: .2s;
+      margin-bottom: 5px;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      background: #263249;
+      color: white;
+    }
+
+    .nav-link.active {
+      border-right: 3px solid #818cf8;
+    }
+
+    .content {
+      min-width: 0;
+      padding: 30px;
+    }
+
+    .panel-card {
+      background: white;
+      border: 1px solid #e9edf4;
+      border-radius: 18px;
+      box-shadow: 0 5px 20px rgba(25, 42, 70, .035);
+    }
+
+    .welcome-card {
+      background: linear-gradient(115deg, #3730a3, #6366f1 60%, #8b5cf6);
+      color: white;
+      border-radius: 22px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .welcome-card::after {
+      content: "";
+      position: absolute;
+      width: 230px;
+      height: 230px;
+      border: 35px solid rgba(255,255,255,.08);
+      border-radius: 50%;
+      left: -65px;
+      top: -95px;
+    }
+
+    .stat-icon {
+      width: 43px;
+      height: 43px;
+      display: grid;
+      place-items: center;
+      border-radius: 13px;
+      font-size: 19px;
+    }
+
+    .section-title {
+      font-size: 17px;
+      font-weight: 800;
+      color: #202a3b;
+    }
+
+    .muted {
+      color: #8993a5;
+    }
+
+    .progress-track {
+      height: 8px;
+      border-radius: 20px;
+      background: #edf0f6;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #6366f1, #8b5cf6);
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      white-space: nowrap;
+    }
+
+    th, td {
+      text-align: right;
+      padding: 14px 12px;
+      border-bottom: 1px solid #edf0f5;
+      font-size: 13px;
+    }
+
+    th {
+      color: #7d8798;
+      font-weight: 600;
+      background: #fafbfe;
+    }
+
+    td {
+      color: #364154;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .status-green {
+      background: #e8f8ef;
+      color: #16834c;
+    }
+
+    .status-yellow {
+      background: #fff5dc;
+      color: #a66a00;
+    }
+
+    .status-red {
+      background: #ffebeb;
+      color: #c24141;
+    }
+
+    .schedule-item {
+      border-right: 3px solid #818cf8;
+      background: #f8f9ff;
+      border-radius: 12px;
+      padding: 13px;
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 13px 0;
+      border-bottom: 1px solid #edf0f5;
+      font-size: 13px;
+    }
+
+    .info-row:last-child {
+      border-bottom: 0;
+    }
+
+    .page-section {
+      scroll-margin-top: 24px;
+      margin-top: 30px;
+    }
+
+    .section-anchor {
+      display: block;
+      height: 1px;
+    }
+
+    @media (max-width: 900px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: static;
+        min-height: auto;
+        height: auto;
+        padding: 18px;
+      }
+
+      .sidebar-nav {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 3px 8px;
+      }
+
+      .nav-link {
+        margin: 0;
+      }
+
+      .content {
+        padding: 22px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .content {
+        padding: 14px;
+      }
+
+      .sidebar-nav {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .welcome-card {
+        padding: 22px !important;
+      }
+
+      .mobile-stack {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="flex items-center gap-3 mb-9 px-2">
+        <div class="brand-mark">م</div>
+        <div>
+          <h1 class="font-extrabold text-white text-lg">مدرسه هوشمند</h1>
+          <p class="text-xs text-gray-400 mt-1">سامانه مدیریت آموزشی</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3 p-3 rounded-xl mb-7" style="background:#202c40">
+        <div class="w-11 h-11 rounded-full bg-indigo-500 flex items-center justify-center text-white font-bold">ع‌م</div>
+        <div>
+          <p class="text-sm font-bold text-white">علی محمدی</p>
+          <p class="text-xs text-gray-400 mt-1">دانش‌آموز پایه دهم</p>
+        </div>
+      </div>
+
+      <p class="text-xs text-gray-500 font-bold px-3 mb-3">منوی دانش‌آموز</p>
+
+      <nav class="sidebar-nav">
+        <a class="nav-link active" href="#dashboard">▦ <span>داشبورد</span></a>
+        <a class="nav-link" href="#grades">▤ <span>نمرات و کارنامه</span></a>
+        <a class="nav-link" href="#attendance">◷ <span>حضور و غیاب</span></a>
+        <a class="nav-link" href="#schedule">▦ <span>برنامه کلاسی</span></a>
+        <a class="nav-link" href="#homework">✎ <span>تکالیف</span></a>
+        <a class="nav-link" href="#resources">▣ <span>منابع آموزشی</span></a>
+        <a class="nav-link" href="#messages">✉ <span>پیام‌ها</span></a>
+        <a class="nav-link" href="#notifications">♧ <span>اطلاعیه‌ها</span></a>
+        <a class="nav-link" href="#profile">♙ <span>پروفایل من</span></a>
+        <a class="nav-link" href="../index.html">↩ <span>بازگشت به صفحه اصلی</span></a>
+      </nav>
+
+      <div class="mt-8 p-4 rounded-xl" style="background:#202c40">
+        <p class="text-xs text-gray-400 mb-2">سال تحصیلی</p>
+        <p class="text-sm text-white font-bold">۱۴۰۵ - ۱۴۰۶</p>
+        <p class="text-xs text-gray-500 mt-2">نسخه نمایشی سامانه</p>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="content">
+
+      <!-- Topbar -->
+      <header class="flex justify-between items-center mobile-stack gap-4 mb-7">
+        <div>
+          <p class="text-sm muted">پنل دانش‌آموز</p>
+          <h2 class="text-2xl font-extrabold mt-1">داشبورد من</h2>
+        </div>
+        <div class="flex items-center gap-3">
+          <a href="#notifications" class="panel-card px-4 py-3 text-sm">♧ اطلاعیه‌ها</a>
+          <div class="w-10 h-10 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold">ع‌م</div>
+        </div>
+      </header>
+
+      <!-- Dashboard -->
+      <section id="dashboard">
+
+        <div class="welcome-card p-8 mb-6">
+          <div class="relative z-10 max-w-xl">
+            <p class="text-indigo-100 text-sm mb-3">شنبه، ۸ آذر ۱۴۰۵</p>
+            <h2 class="text-2xl md:text-3xl font-extrabold mb-3">سلام علی عزیز! 👋</h2>
+            <p class="text-sm text-indigo-100 leading-8">
+              به پنل دانش‌آموزی خوش آمدی. از این قسمت می‌توانی وضعیت تحصیلی،
+              تکالیف، برنامه کلاسی و اطلاعیه‌های مدرسه را مشاهده کنی.
+            </p>
+            <a href="#grades" class="inline-block mt-5 bg-white text-indigo-700 rounded-xl px-5 py-3 text-sm font-bold">
+              مشاهده کارنامه
+            </a>
+          </div>
+        </div>
+
+        <!-- Statistics -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mb-7">
+          <div class="panel-card p-5">
+            <div class="flex justify-between items-center">
+              <div>
+                <p class="text-xs muted">معدل کل</p>
+                <p class="text-2xl font-extrabold mt-2">۱۸.۷۵</p>
+                <p class="text-xs text-green-600 mt-2">عملکرد خوب تحصیلی</p>
+              </div>
+              <div class="stat-icon bg-indigo-50 text-indigo-600">★</div>
+            </div>
+          </div>
+
+          <div class="panel-card p-5">
+            <div class="flex justify-between items-center">
+              <div>
+                <p class="text-xs muted">حضور در کلاس</p>
+                <p class="text-2xl font-extrabold mt-2">۹۴٪</p>
+                <p class="text-xs text-green-600 mt-2">وضعیت مناسب</p>
+              </div>
+              <div class="stat-icon bg-green-50 text-green-600">✓</div>
+            </div>
+          </div>
+
+          <div class="panel-card p-5">
+            <div class="flex justify-between items-center">
+              <div>
+                <p class="text-xs muted">تکالیف باقی‌مانده</p>
+                <p class="text-2xl font-extrabold mt-2">۳</p>
+                <p class="text-xs text-yellow-600 mt-2">نیازمند بررسی</p>
+              </div>
+              <div class="stat-icon bg-yellow-50 text-yellow-600">✎</div>
+            </div>
+          </div>
+
+          <div class="panel-card p-5">
+            <div class="flex justify-between items-center">
+              <div>
+                <p class="text-xs muted">پیام‌های جدید</p>
+                <p class="text-2xl font-extrabold mt-2">۲</p>
+                <p class="text-xs text-indigo-600 mt-2">پیام خوانده‌نشده</p>
+              </div>
+              <div class="stat-icon bg-purple-50 text-purple-600">✉</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 xl:grid-cols-3 gap-5">
+          <!-- Today's Schedule -->
+          <div class="panel-card p-5 xl:col-span-2">
+            <div class="flex justify-between items-center mb-5">
+              <h3 class="section-title">برنامه امروز</h3>
+              <a href="#schedule" class="text-xs text-indigo-600 font-bold">مشاهده برنامه کامل</a>
+            </div>
+
+            <div class="space-y-3">
+              <div class="schedule-item flex justify-between items-center">
+                <div>
+                  <p class="font-bold text-sm">ریاضی</p>
+                  <p class="text-xs muted mt-1">آقای احمدی | کلاس ۱۰۱</p>
+                </div>
+                <span class="text-xs font-bold text-indigo-600">۰۸:۰۰ - ۰۹:۳۰</span>
+              </div>
+
+              <div class="schedule-item flex justify-between items-center" style="border-color:#10b981;background:#f2fbf6">
+                <div>
+                  <p class="font-bold text-sm">فیزیک</p>
+                  <p class="text-xs muted mt-1">خانم رضایی | کلاس ۱۰۱</p>
+                </div>
+                <span class="text-xs font-bold text-green-600">۰۹:۴۵ - ۱۱:۱۵</span>
+              </div>
+
+              <div class="schedule-item flex justify-between items-center" style="border-color:#f59e0b;background:#fffbf1">
+                <div>
+                  <p class="font-bold text-sm">ادبیات فارسی</p>
+                  <p class="text-xs muted mt-1">آقای کریمی | کلاس ۱۰۱</p>
+                </div>
+                <span class="text-xs font-bold text-yellow-600">۱۱:۳۰ - ۱۳:۰۰</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Progress -->
+          <div class="panel-card p-5">
+            <h3 class="section-title mb-5">عملکرد درسی</h3>
+
+            <div class="mb-5">
+              <div class="flex justify-between text-xs mb-2">
+                <span>ریاضی</span><span class="font-bold">۹۰٪</span>
+              </div>
+              <div class="progress-track"><div class="progress-fill" style="width:90%"></div></div>
+            </div>
+
+            <div class="mb-5">
+              <div class="flex justify-between text-xs mb-2">
+                <span>علوم</span><span class="font-bold">۸۲٪</span>
+              </div>
+              <div class="progress-track"><div class="progress-fill" style="width:82%"></div></div>
+            </div>
+
+            <div class="mb-5">
+              <div class="flex justify-between text-xs mb-2">
+                <span>زبان انگلیسی</span><span class="font-bold">۷۸٪</span>
+              </div>
+              <div class="progress-track"><div class="progress-fill" style="width:78%"></div></div>
+            </div>
+
+            <div>
+              <div class="flex justify-between text-xs mb-2">
+                <span>ادبیات فارسی</span><span class="font-bold">۹۵٪</span>
+              </div>
+              <div class="progress-track"><div class="progress-fill" style="width:95%"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Latest Activities -->
+        <div class="panel-card p-5 mt-5">
+          <h3 class="section-title mb-4">آخرین فعالیت‌ها</h3>
+          <div class="info-row">
+            <span>ثبت نمره جدید برای درس ریاضی</span>
+            <span class="muted">امروز</span>
+          </div>
+          <div class="info-row">
+            <span>انتشار تکلیف جدید درس فیزیک</span>
+            <span class="muted">دیروز</span>
+          </div>
+          <div class="info-row">
+            <span>ثبت حضور در کلاس ادبیات</span>
+            <span class="muted">۲ روز پیش</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Grades -->
+      <section id="grades" class="page-section">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="section-title">نمرات و کارنامه</h2>
+          <span class="text-xs muted">نیم‌سال اول ۱۴۰۵</span>
+        </div>
+
+        <div class="panel-card p-5 mb-5">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div>
+              <p class="text-xs muted">معدل نیم‌سال</p>
+              <p class="text-2xl font-extrabold text-indigo-600 mt-2">۱۸.۷۵</p>
+            </div>
+            <div>
+              <p class="text-xs muted">تعداد دروس</p>
+              <p class="text-2xl font-extrabold mt-2">۸ درس</p>
+            </div>
+            <div>
+              <p class="text-xs muted">وضعیت تحصیلی</p>
+              <p class="text-lg font-bold text-green-600 mt-2">موفق</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-card table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>نام درس</th>
+                <th>نمره مستمر</th>
+                <th>نمره پایانی</th>
+                <th>نمره نهایی</th>
+                <th>وضعیت</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>ریاضی</td><td>۱۹</td><td>۱۸</td><td>۱۸.۵</td><td><span class="status status-green">قبول</span></td></tr>
+              <tr><td>علوم تجربی</td><td>۱۸</td><td>۱۹</td><td>۱۸.۵</td><td><span class="status status-green">قبول</span></td></tr>
+              <tr><td>ادبیات فارسی</td><td>۲۰</td><td>۱۹</td><td>۱۹.۵</td><td><span class="status status-green">قبول</span></td></tr>
+              <tr><td>زبان انگلیسی</td><td>۱۷</td><td>۱۸</td><td>۱۷.۵</td><td><span class="status status-green">قبول</span></td></tr>
+              <tr><td>عربی</td><td>۱۸</td><td>۱۷</td><td>۱۷.۵</td><td><span class="status status-green">قبول</span></td></tr>
+              <tr><td>دینی</td><td>۱۹</td><td>۲۰</td><td>۱۹.۵</td><td><span class="status status-green">قبول</span></td></tr>
+              <tr><td>فیزیک</td><td>۱۸</td><td>۱۸</td><td>۱۸</td><td><span class="status status-green">قبول</span></td></tr>
+              <tr><td>ورزش</td><td>۲۰</td><td>۲۰</td><td>۲۰</td><td><span class="status status-green">قبول</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Attendance -->
+      <section id="attendance" class="page-section">
+        <h2 class="section-title mb-4">وضعیت حضور و غیاب</h2>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-5">
+          <div class="panel-card p-5">
+            <p class="text-xs muted">روزهای حاضر</p>
+            <p class="text-2xl font-extrabold text-green-600 mt-2">۸۴</p>
+          </div>
+          <div class="panel-card p-5">
+            <p class="text-xs muted">غیبت‌ها</p>
+            <p class="text-2xl font-extrabold text-red-500 mt-2">۳</p>
+          </div>
+          <div class="panel-card p-5">
+            <p class="text-xs muted">تأخیرها</p>
+            <p class="text-2xl font-extrabold text-yellow-600 mt-2">۲</p>
+          </div>
+        </div>
+
+        <div class="panel-card table-wrap">
+          <table>
+            <thead>
+              <tr><th>تاریخ</th><th>وضعیت</th><th>توضیحات</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>۱۴۰۵/۰۸/۲۸</td><td><span class="status status-green">حاضر</span></td><td>حضور کامل</td></tr>
+              <tr><td>۱۴۰۵/۰۸/۲۷</td><td><span class="status status-green">حاضر</span></td><td>حضور کامل</td></tr>
+              <tr><td>۱۴۰۵/۰۸/۲۶</td><td><span class="status status-yellow">تأخیر</span></td><td>ورود با ۱۵ دقیقه تأخیر</td></tr>
+              <tr><td>۱۴۰۵/۰۸/۲۵</td><td><span class="status status-red">غایب</span></td><td>غیبت ثبت‌شده</td></tr>
+              <tr><td>۱۴۰۵/۰۸/۲۴</td><td><span class="status status-green">حاضر</span></td><td>حضور کامل</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Schedule -->
+      <section id="schedule" class="page-section">
+        <h2 class="section-title mb-4">برنامه هفتگی کلاس‌ها</h2>
+
+        <div class="panel-card table-wrap">
+          <table>
+            <thead>
+              <tr><th>روز</th><th>ساعت اول</th><th>ساعت دوم</th><th>ساعت سوم</th><th>ساعت چهارم</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="font-bold">شنبه</td><td>ریاضی</td><td>فیزیک</td><td>ادبیات</td><td>ورزش</td></tr>
+              <tr><td class="font-bold">یکشنبه</td><td>علوم</td><td>زبان</td><td>عربی</td><td>دینی</td></tr>
+              <tr><td class="font-bold">دوشنبه</td><td>ریاضی</td><td>ادبیات</td><td>فیزیک</td><td>آزمایشگاه</td></tr>
+              <tr><td class="font-bold">سه‌شنبه</td><td>زبان</td><td>علوم</td><td>ورزش</td><td>عربی</td></tr>
+              <tr><td class="font-bold">چهارشنبه</td><td>دینی</td><td>ریاضی</td><td>ادبیات</td><td>علوم</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="text-xs muted mt-3">این برنامه نمونه است و جنبه نمایشی دارد.</p>
+      </section>
+
+      <!-- Homework -->
+      <section id="homework" class="page-section">
+        <h2 class="section-title mb-4">تکالیف و تمرین‌ها</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="panel-card p-5">
+            <div class="flex justify-between items-center mb-3">
+              <span class="status status-yellow">در انتظار انجام</span>
+              <span class="text-xs muted">مهلت: ۱۴۰۵/۰۹/۱۰</span>
+            </div>
+            <h3 class="font-bold">حل تمرین فصل سوم</h3>
+            <p class="text-xs muted mt-2">درس ریاضی | آقای احمدی</p>
+            <p class="text-sm text-gray-600 leading-7 mt-3">تمرین‌های مشخص‌شده در کتاب درسی را حل و برای بررسی آماده کنید.</p>
+          </div>
+
+          <div class="panel-card p-5">
+            <div class="flex justify-between items-center mb-3">
+              <span class="status status-green">انجام‌شده</span>
+              <span class="text-xs muted">مهلت: ۱۴۰۵/۰۹/۰۵</span>
+            </div>
+            <h3 class="font-bold">تحقیق درباره انرژی</h3>
+            <p class="text-xs muted mt-2">درس فیزیک | خانم رضایی</p>
+            <p class="text-sm text-gray-600 leading-7 mt-3">تحقیق کوتاهی درباره انواع انرژی و کاربردهای آن تهیه کنید.</p>
+          </div>
+
+          <div class="panel-card p-5">
+            <div class="flex justify-between items-center mb-3">
+              <span class="status status-yellow">در انتظار انجام</span>
+              <span class="text-xs muted">مهلت: ۱۴۰۵/۰۹/۱۲</span>
+            </div>
+            <h3 class="font-bold">تمرین درس پنجم</h3>
+            <p class="text-xs muted mt-2">درس زبان انگلیسی | آقای موسوی</p>
+            <p class="text-sm text-gray-600 leading-7 mt-3">لغات درس پنجم را مطالعه و تمرین‌های کتاب کار را تکمیل کنید.</p>
+          </div>
+
+          <div class="panel-card p-5">
+            <div class="flex justify-between items-center mb-3">
+              <span class="status status-red">نزدیک به موعد</span>
+              <span class="text-xs muted">مهلت: ۱۴۰۵/۰۹/۰۹</span>
+            </div>
+            <h3 class="font-bold">خلاصه درس چهارم</h3>
+            <p class="text-xs muted mt-2">درس ادبیات فارسی | آقای کریمی</p>
+            <p class="text-sm text-gray-600 leading-7 mt-3">خلاصه درس را در دفتر خود نوشته و نکات مهم را مشخص کنید.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Resources -->
+      <section id="resources" class="page-section">
+        <h2 class="section-title mb-4">منابع آموزشی</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="panel-card p-5">
+            <div class="stat-icon bg-indigo-50 text-indigo-600 mb-4">▤</div>
+            <h3 class="font-bold">جزوه ریاضی</h3>
+            <p class="text-xs muted mt-2">مجموعه نکات و تمرین‌های ریاضی</p>
+            <span class="inline-block text-xs text-gray-400 mt-4">منبع نمایشی</span>
+          </div>
+
+          <div class="panel-card p-5">
+            <div class="stat-icon bg-green-50 text-green-600 mb-4">▣</div>
+            <h3 class="font-bold">محتوای علوم</h3>
+            <p class="text-xs muted mt-2">مطالب تکمیلی و آموزشی علوم</p>
+            <span class="inline-block text-xs text-gray-400 mt-4">منبع نمایشی</span>
+          </div>
+
+          <div class="panel-card p-5">
+            <div class="stat-icon bg-yellow-50 text-yellow-600 mb-4">▧</div>
+            <h3 class="font-bold">نمونه سؤالات</h3>
+            <p class="text-xs muted mt-2">نمونه سؤالات آزمون‌های گذشته</p>
+            <span class="inline-block text-xs text-gray-400 mt-4">منبع نمایشی</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Messages -->
+      <section id="messages" class="page-section">
+        <h2 class="section-title mb-4">پیام‌ها</h2>
+
+        <div class="panel-card p-5">
+          <div class="info-row">
+            <div>
+              <p class="font-bold">پیام از طرف معلم ریاضی</p>
+              <p class="text-xs muted mt-2">لطفاً تمرین‌های فصل سوم را برای جلسه آینده آماده کنید.</p>
+            </div>
+            <span class="status status-yellow">جدید</span>
+          </div>
+
+          <div class="info-row">
+            <div>
+              <p class="font-bold">پیام از طرف مدیر مدرسه</p>
+              <p class="text-xs muted mt-2">برنامه آزمون‌های میان‌ترم در بخش اطلاعیه‌ها قرار گرفت.</p>
+            </div>
+            <span class="status status-green">خوانده‌شده</span>
+          </div>
+
+          <div class="info-row">
+            <div>
+              <p class="font-bold">پیام از طرف مشاور</p>
+              <p class="text-xs muted mt-2">برای جلسه مشاوره تحصیلی به دفتر مشاور مراجعه کنید.</p>
+            </div>
+            <span class="status status-yellow">جدید</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Notifications -->
+      <section id="notifications" class="page-section">
+        <h2 class="section-title mb-4">اطلاعیه‌های مدرسه</h2>
+
+        <div class="space-y-4">
+          <div class="panel-card p-5">
+            <div class="flex justify-between gap-3">
+              <h3 class="font-bold">زمان برگزاری آزمون‌های میان‌ترم</h3>
+              <span class="text-xs muted">۱۴۰۵/۰۹/۰۲</span>
+            </div>
+            <p class="text-sm text-gray-600 leading-8 mt-3">
+              برنامه آزمون‌های میان‌ترم از طریق مدرسه اعلام شده است.
+              دانش‌آموزان برنامه امتحانی خود را بررسی کنند.
+            </p>
+          </div>
+
+          <div class="panel-card p-5">
+            <div class="flex justify-between gap-3">
+              <h3 class="font-bold">جلسه اولیا و مربیان</h3>
+              <span class="text-xs muted">۱۴۰۵/۰۸/۲۸</span>
+            </div>
+            <p class="text-sm text-gray-600 leading-8 mt-3">
+              جلسه اولیا و مربیان روز دوشنبه در سالن اجتماعات مدرسه برگزار می‌شود.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Profile -->
+      <section id="profile" class="page-section">
+        <h2 class="section-title mb-4">اطلاعات پروفایل</h2>
+
+        <div class="panel-card p-6">
+          <div class="flex items-center gap-4 mb-6">
+            <div class="w-16 h-16 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center text-xl font-extrabold">ع‌م</div>
+            <div>
+              <h3 class="font-extrabold text-lg">علی محمدی</h3>
+              <p class="text-xs muted mt-1">دانش‌آموز پایه دهم - کلاس ۱۰۱</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10">
+            <div class="info-row"><span class="muted">نام و نام خانوادگی</span><strong>علی محمدی</strong></div>
+            <div class="info-row"><span class="muted">شماره دانش‌آموزی</span><strong>۱۴۰۵۱۰۰۱</strong></div>
+            <div class="info-row"><span class="muted">پایه تحصیلی</span><strong>دهم</strong></div>
+            <div class="info-row"><span class="muted">کلاس</span><strong>۱۰۱</strong></div>
+            <div class="info-row"><span class="muted">نام پدر</span><strong>محمد محمدی</strong></div>
+            <div class="info-row"><span class="muted">سال تحصیلی</span><strong>۱۴۰۵ - ۱۴۰۶</strong></div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="text-center text-xs muted py-8 mt-8 border-t border-gray-200">
+        سامانه مدیریت مدرسه | نسخه نمایشی پروژه دانش‌آموزی
+      </footer>
+
+    </main>
+  </div>
+</body>
+</html>
