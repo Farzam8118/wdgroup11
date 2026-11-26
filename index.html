@@ -1,184 +1,219 @@
 
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#0b1224">
-  <meta name="description" content="درگاه ورود یکپارچه سامانه مدیریت و آموزش مدرسه">
-  <title>ورود به سامانه | مدرسه هوشمند</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <style>
-    :root{--navy:#0b1224;--muted:#9ba8bf;--line:rgba(255,255,255,.1);--violet:#9b8cff;--mint:#50d6bd}
-    *{box-sizing:border-box}
-    body{font-family:"Vazirmatn",Tahoma,sans-serif;background:var(--navy);color:#f7f8fc}
-    a{transition:all .22s ease}
-    .page-bg{background:radial-gradient(ellipse at 12% 12%,rgba(124,103,255,.19),transparent 34%),radial-gradient(ellipse at 88% 82%,rgba(50,205,177,.13),transparent 31%),linear-gradient(135deg,#0b1224 0%,#101b32 55%,#0b1427 100%)}
-    .glass{background:rgba(20,31,55,.76);border:1px solid var(--line);box-shadow:0 24px 80px rgba(0,0,0,.24);backdrop-filter:blur(18px)}
-    .eyebrow{letter-spacing:.18em}
-    .role-card{position:relative;display:block;overflow:hidden;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.1);transition:transform .25s ease,border-color .25s ease,background .25s ease}
-    .role-card:hover{transform:translateY(-5px);background:rgba(255,255,255,.075);border-color:rgba(155,140,255,.58)}
-    .role-card:focus-visible,.help-link:focus-visible{outline:3px solid #50d6bd;outline-offset:3px}
-    .shine{position:absolute;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(155,140,255,.2),transparent 68%);top:-180px;left:-120px;pointer-events:none}
-    .orb{position:absolute;border-radius:50%;filter:blur(1px);pointer-events:none}
-    .orb.one{width:190px;height:190px;border:1px solid rgba(155,140,255,.2);left:5%;top:18%}
-    .orb.two{width:280px;height:280px;border:1px solid rgba(80,214,189,.12);left:1%;top:22%}
-    .divider{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.14),transparent)}
-    .login-input{width:100%;border-radius:12px;padding:13px 16px;background:rgba(5,12,27,.65);border:1px solid rgba(255,255,255,.13);color:#f7f8fc;text-align:center;font-weight:800;outline:none}
-    .login-input:focus{border-color:#9b8cff}
-    @media(max-width:767px){.hero-title{font-size:2.15rem;line-height:1.55}.orb.one,.orb.two{opacity:.45}}
-  </style>
-</head>
-<body class="min-h-screen page-bg">
-  <div class="relative min-h-screen overflow-hidden">
-    <div class="orb one"></div>
-    <div class="orb two"></div>
+<style>
+  .login-section {
+    direction: rtl;
+    font-family: Tahoma, sans-serif;
+    color: #fff;
+    padding: 45px 20px;
+    text-align: center;
+  }
 
-    <header class="relative z-10 max-w-7xl mx-auto px-5 md:px-8 pt-6">
-      <div class="flex items-center justify-between">
-        <a href="./index.html" class="flex items-center gap-3">
-          <div class="w-12 h-12 rounded-2xl flex items-center justify-center text-xl font-black" style="background:linear-gradient(145deg,#a99cff,#6655d8);box-shadow:0 10px 30px rgba(126,105,255,.25)">م</div>
-          <div>
-            <div class="font-extrabold text-base md:text-lg">مدرسه هوشمند</div>
-            <div class="text-xs mt-1" style="color:#93a0b8">درگاه یکپارچه خدمات آموزشی</div>
-          </div>
-        </a>
-        <div class="hidden sm:block text-xs rounded-full px-4 py-2" style="background:rgba(255,255,255,.055);border:1px solid var(--line);color:#b9c4d8">
-          درگاه یکپارچه کاربران
-        </div>
-      </div>
-    </header>
+  .login-section * { box-sizing: border-box; }
 
-    <main class="relative z-10 max-w-7xl mx-auto px-5 md:px-8 pt-12 md:pt-20 pb-12">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+  .login-section .login-title {
+    font-size: 30px;
+    font-weight: 800;
+    margin-bottom: 12px;
+  }
 
-        <section class="lg:col-span-5">
-          <div class="inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-bold mb-6" style="background:rgba(155,140,255,.12);border:1px solid rgba(155,140,255,.25);color:#c5bcff">
-            <span>✦</span>
-            <span class="eyebrow">SMART SCHOOL PORTAL</span>
-          </div>
+  .login-section .login-description {
+    color: #aab5ca;
+    margin-bottom: 35px;
+    line-height: 2;
+  }
 
-          <h1 class="hero-title text-4xl md:text-5xl font-black leading-relaxed mb-6">
-            همه چیز مدرسه،<br>
-            <span style="background:linear-gradient(90deg,#b7adff,#62dfc8);-webkit-background-clip:text;background-clip:text;color:transparent">یک‌جا و هوشمند.</span>
-          </h1>
+  .login-section .role-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    max-width: 900px;
+    margin: auto;
+  }
 
-          <p class="text-sm md:text-base leading-8 mb-9" style="color:#aab6ca;max-width:510px">
-            به سامانه مدیریت و آموزش مدرسه خوش آمدید. اطلاعات ورود خود را مشاهده کنید و متناسب با نقش خود وارد پنل اختصاصی شوید.
-          </p>
+  .login-section .role-card {
+    background: #17243d;
+    border: 1px solid #34415b;
+    border-radius: 20px;
+    padding: 28px 20px;
+    cursor: pointer;
+    transition: .25s;
+  }
 
-          <div class="grid grid-cols-3 gap-4 max-w-lg mb-9">
-            <div class="pr-3" style="border-right:2px solid #50d6bd">
-              <div class="text-lg font-extrabold">۳</div>
-              <div class="text-xs mt-1" style="color:#8795ad">پنل کاربری</div>
-            </div>
-            <div class="pr-3" style="border-right:2px solid #9b8cff">
-              <div class="text-lg font-extrabold">یکپارچه</div>
-              <div class="text-xs mt-1" style="color:#8795ad">دسترسی متمرکز</div>
-            </div>
-            <div class="pr-3" style="border-right:2px solid #50d6bd">
-              <div class="text-lg font-extrabold">واکنش‌گرا</div>
-              <div class="text-xs mt-1" style="color:#8795ad">نمایش موبایل</div>
-            </div>
-          </div>
+  .login-section .role-card:hover {
+    transform: translateY(-5px);
+    border-color: #a78bfa;
+    background: #202f4d;
+  }
 
-          <div class="glass rounded-2xl p-5 max-w-lg">
-            <div class="font-bold text-sm mb-3">✧ دسترسی سریع‌تر، پیگیری آسان‌تر</div>
-            <p class="text-xs leading-7" style="color:#9ba8bf">
-              مشاهده اطلاعات آموزشی، پیگیری امور مدرسه و دسترسی به امکانات اختصاصی هر کاربر.
-            </p>
-          </div>
-        </section>
+  .login-section .role-card h3 {
+    font-size: 20px;
+    margin: 12px 0;
+  }
 
-        <section class="lg:col-span-7">
-          <div class="glass rounded-3xl p-5 md:p-8 relative overflow-hidden">
-            <div class="shine"></div>
+  .login-section .role-icon {
+    font-size: 42px;
+  }
 
-            <div class="relative z-10">
-              <div class="mb-7">
-                <div class="text-xs font-bold mb-2" style="color:#8fe5d5">ورود کاربران</div>
-                <h2 class="text-2xl md:text-3xl font-black">ورود به سامانه</h2>
-                <p class="text-xs md:text-sm mt-3 leading-7" style="color:#9ba8bf">
-                  اطلاعات ورود آزمایشی از قبل تنظیم شده‌اند. پنل موردنظر خود را انتخاب کنید.
-                </p>
-              </div>
+  .login-section .role-card p {
+    color: #aab5ca;
+    font-size: 13px;
+    line-height: 2;
+  }
 
-              <div class="rounded-2xl p-5 md:p-6 mb-5" style="background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09)">
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <label class="block">
-                    <span class="block text-xs font-bold mb-2" style="color:#cbd5e1">نام کاربری</span>
-                    <input class="login-input" type="text" value="admin" readonly autocomplete="username">
-                  </label>
-                  <label class="block">
-                    <span class="block text-xs font-bold mb-2" style="color:#cbd5e1">رمز عبور</span>
-                    <input class="login-input" type="password" value="admin" readonly autocomplete="current-password">
-                  </label>
-                </div>
+  .login-section .login-link {
+    display: inline-block;
+    margin-top: 18px;
+    padding: 10px 18px;
+    border-radius: 10px;
+    background: #6746d8;
+    color: white;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: bold;
+  }
 
-                <div class="text-xs leading-6 rounded-xl px-4 py-3 mt-5" style="background:rgba(80,214,189,.08);border:1px solid rgba(80,214,189,.16);color:#9debdc">
-                  اطلاعات ورود نمایشی: نام کاربری و رمز عبور هر دو admin هستند.
-                </div>
-              </div>
+  .login-section .login-form {
+    display: none;
+    max-width: 430px;
+    margin: 25px auto 0;
+    padding: 28px;
+    background: #17243d;
+    border: 1px solid #5946a5;
+    border-radius: 20px;
+    text-align: right;
+  }
 
-              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <a href="./school-panel/index.html" class="role-card rounded-xl px-4 py-5 text-center">
-                  <div class="text-3xl mb-3" style="color:#b9adff">♜</div>
-                  <div class="font-extrabold text-sm">ورود مدیر</div>
-                  <div class="text-xs mt-2" style="color:#9ba8bf">پنل مدیریت مدرسه</div>
-                  <div class="text-xs mt-4" style="color:#b9adff">ورود ←</div>
-                </a>
+  .login-section .login-form:target {
+    display: block;
+  }
 
-                <a href="./student-panel/index.html" class="role-card rounded-xl px-4 py-5 text-center">
-                  <div class="text-3xl mb-3" style="color:#8fc1ff">✎</div>
-                  <div class="font-extrabold text-sm">ورود دانش‌آموز</div>
-                  <div class="text-xs mt-2" style="color:#9ba8bf">پنل دانش‌آموزی</div>
-                  <div class="text-xs mt-4" style="color:#8fc1ff">ورود ←</div>
-                </a>
+  .login-section .login-form h3 {
+    text-align: center;
+    font-size: 22px;
+    margin-bottom: 22px;
+  }
 
-                <a href="./parent-panel/index.html" class="role-card rounded-xl px-4 py-5 text-center">
-                  <div class="text-3xl mb-3" style="color:#72e5d1">♡</div>
-                  <div class="font-extrabold text-sm">ورود والدین</div>
-                  <div class="text-xs mt-2" style="color:#9ba8bf">پنل والدین</div>
-                  <div class="text-xs mt-4" style="color:#72e5d1">ورود ←</div>
-                </a>
-              </div>
+  .login-section .login-form label {
+    display: block;
+    color: #cbd5e1;
+    font-size: 13px;
+    margin: 15px 0 8px;
+  }
 
-              <div class="divider my-7"></div>
+  .login-section .login-form input {
+    width: 100%;
+    padding: 13px;
+    border-radius: 10px;
+    border: 1px solid #394968;
+    background: #0b1224;
+    color: white;
+    outline: none;
+  }
 
-              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                <div class="flex items-center gap-2 text-xs" style="color:#9ba8bf">
-                  <span>ⓘ</span>
-                  <span>این نسخه برای نمایش و ارائه پروژه طراحی شده است.</span>
-                </div>
-                <a href="#help" class="text-xs font-bold" style="color:#a99cff">راهنمای ورود ←</a>
-              </div>
-            </div>
-          </div>
+  .login-section .login-form input:focus {
+    border-color: #a78bfa;
+  }
 
-          <div id="help" class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
-            <div class="rounded-2xl p-4" style="background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.07)">
-              <div class="text-xs font-bold mb-2" style="color:#8fe5d5">✓ انتخاب پنل درست</div>
-              <p class="text-xs leading-6" style="color:#8795ad">هر نقش، صفحه و امکانات مخصوص خود را دارد.</p>
-            </div>
-            <div class="rounded-2xl p-4" style="background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.07)">
-              <div class="text-xs font-bold mb-2" style="color:#b9adff">؟ راهنمایی</div>
-              <p class="text-xs leading-6" style="color:#8795ad">در صورت مشکل ورود، با مسئول سامانه هماهنگ کنید.</p>
-            </div>
-          </div>
-        </section>
-      </div>
-    </main>
+  .login-section .submit-link {
+    display: block;
+    text-align: center;
+    margin-top: 22px;
+    padding: 13px;
+    background: #6746d8;
+    color: white;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+  }
 
-    <footer class="relative z-10 max-w-7xl mx-auto px-5 md:px-8 pb-7">
-      <div class="divider mb-5"></div>
-      <div class="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs" style="color:#71809a">
-        <span>سامانه مدیریت و آموزش مدرسه</span>
-        <span>طراحی‌شده برای دسترسی ساده‌تر به خدمات آموزشی</span>
-      </div>
-    </footer>
+  .login-section .back-link {
+    display: block;
+    text-align: center;
+    margin-top: 18px;
+    color: #aab5ca;
+    text-decoration: none;
+    font-size: 13px;
+  }
+
+  .login-section .login-note {
+    margin-top: 20px;
+    text-align: center;
+    color: #8491aa;
+    font-size: 11px;
+    line-height: 2;
+  }
+
+  @media(max-width:650px) {
+    .login-section .role-grid {
+      grid-template-columns: 1fr;
+    }
+    .login-section .login-title {
+      font-size: 24px;
+    }
+  }
+</style>
+
+<section class="login-section">
+  <div class="login-title">سامانه مدرسه هوشمند</div>
+  <p class="login-description">
+    برای ورود به سامانه، نقش کاربری خود را انتخاب کنید.
+  </p>
+
+  <div class="role-grid">
+    <a href="#admin-login" class="role-card" style="text-decoration:none;color:white">
+      <div class="role-icon">♜</div>
+      <h3>مدیر مدرسه</h3>
+      <p>مدیریت اطلاعات و امکانات مدرسه</p>
+      <span class="login-link">ورود به پنل مدیر</span>
+    </a>
+
+    <a href="#student-login" class="role-card" style="text-decoration:none;color:white">
+      <div class="role-icon">✎</div>
+      <h3>دانش‌آموز</h3>
+      <p>مشاهده نمرات و اطلاعات آموزشی</p>
+      <span class="login-link">ورود به پنل دانش‌آموز</span>
+    </a>
+
+    <a href="#parent-login" class="role-card" style="text-decoration:none;color:white">
+      <div class="role-icon">♡</div>
+      <h3>والدین</h3>
+      <p>پیگیری وضعیت تحصیلی فرزند</p>
+      <span class="login-link">ورود به پنل والدین</span>
+    </a>
   </div>
-</body>
-</html>
+
+  <div id="admin-login" class="login-form">
+    <h3>ورود مدیر مدرسه</h3>
+    <label>نام کاربری</label>
+    <input type="text" placeholder="نام کاربری مدیر">
+    <label>رمز عبور</label>
+    <input type="password" placeholder="رمز عبور مدیر">
+    <a href="./school-panel/index.html" class="submit-link">ورود به پنل مدیر</a>
+    <a href="#" class="back-link">بازگشت به انتخاب نقش</a>
+  </div>
+
+  <div id="student-login" class="login-form">
+    <h3>ورود دانش‌آموز</h3>
+    <label>نام کاربری</label>
+    <input type="text" placeholder="نام کاربری دانش‌آموز">
+    <label>رمز عبور</label>
+    <input type="password" placeholder="رمز عبور دانش‌آموز">
+    <a href="./student-panel/index.html" class="submit-link">ورود به پنل دانش‌آموز</a>
+    <a href="#" class="back-link">بازگشت به انتخاب نقش</a>
+  </div>
+
+  <div id="parent-login" class="login-form">
+    <h3>ورود والدین</h3>
+    <label>نام کاربری</label>
+    <input type="text" placeholder="نام کاربری والدین">
+    <label>رمز عبور</label>
+    <input type="password" placeholder="رمز عبور والدین">
+    <a href="./parent-panel/index.html" class="submit-link">ورود به پنل والدین</a>
+    <a href="#" class="back-link">بازگشت به انتخاب نقش</a>
+  </div>
+
+  <p class="login-note">
+    سامانه مدیریت و آموزش مدرسه<br>
+    نسخه نمایشی پروژه
+  </p>
+</section>
