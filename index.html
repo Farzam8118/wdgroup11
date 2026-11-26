@@ -1,219 +1,357 @@
 
-<style>
-  .login-section {
-    direction: rtl;
-    font-family: Tahoma, sans-serif;
-    color: #fff;
-    padding: 45px 20px;
-    text-align: center;
-  }
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b1224">
+  <title>سامانه مدرسه هوشمند</title>
 
-  .login-section * { box-sizing: border-box; }
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  .login-section .login-title {
-    font-size: 30px;
-    font-weight: 800;
-    margin-bottom: 12px;
-  }
-
-  .login-section .login-description {
-    color: #aab5ca;
-    margin-bottom: 35px;
-    line-height: 2;
-  }
-
-  .login-section .role-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 20px;
-    max-width: 900px;
-    margin: auto;
-  }
-
-  .login-section .role-card {
-    background: #17243d;
-    border: 1px solid #34415b;
-    border-radius: 20px;
-    padding: 28px 20px;
-    cursor: pointer;
-    transition: .25s;
-  }
-
-  .login-section .role-card:hover {
-    transform: translateY(-5px);
-    border-color: #a78bfa;
-    background: #202f4d;
-  }
-
-  .login-section .role-card h3 {
-    font-size: 20px;
-    margin: 12px 0;
-  }
-
-  .login-section .role-icon {
-    font-size: 42px;
-  }
-
-  .login-section .role-card p {
-    color: #aab5ca;
-    font-size: 13px;
-    line-height: 2;
-  }
-
-  .login-section .login-link {
-    display: inline-block;
-    margin-top: 18px;
-    padding: 10px 18px;
-    border-radius: 10px;
-    background: #6746d8;
-    color: white;
-    text-decoration: none;
-    font-size: 13px;
-    font-weight: bold;
-  }
-
-  .login-section .login-form {
-    display: none;
-    max-width: 430px;
-    margin: 25px auto 0;
-    padding: 28px;
-    background: #17243d;
-    border: 1px solid #5946a5;
-    border-radius: 20px;
-    text-align: right;
-  }
-
-  .login-section .login-form:target {
-    display: block;
-  }
-
-  .login-section .login-form h3 {
-    text-align: center;
-    font-size: 22px;
-    margin-bottom: 22px;
-  }
-
-  .login-section .login-form label {
-    display: block;
-    color: #cbd5e1;
-    font-size: 13px;
-    margin: 15px 0 8px;
-  }
-
-  .login-section .login-form input {
-    width: 100%;
-    padding: 13px;
-    border-radius: 10px;
-    border: 1px solid #394968;
-    background: #0b1224;
-    color: white;
-    outline: none;
-  }
-
-  .login-section .login-form input:focus {
-    border-color: #a78bfa;
-  }
-
-  .login-section .submit-link {
-    display: block;
-    text-align: center;
-    margin-top: 22px;
-    padding: 13px;
-    background: #6746d8;
-    color: white;
-    border-radius: 10px;
-    text-decoration: none;
-    font-weight: bold;
-  }
-
-  .login-section .back-link {
-    display: block;
-    text-align: center;
-    margin-top: 18px;
-    color: #aab5ca;
-    text-decoration: none;
-    font-size: 13px;
-  }
-
-  .login-section .login-note {
-    margin-top: 20px;
-    text-align: center;
-    color: #8491aa;
-    font-size: 11px;
-    line-height: 2;
-  }
-
-  @media(max-width:650px) {
-    .login-section .role-grid {
-      grid-template-columns: 1fr;
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
-    .login-section .login-title {
-      font-size: 24px;
+
+    html {
+      width: 100%;
+      min-height: 100%;
+      scroll-behavior: smooth;
     }
-  }
-</style>
 
-<section class="login-section">
-  <div class="login-title">سامانه مدرسه هوشمند</div>
-  <p class="login-description">
-    برای ورود به سامانه، نقش کاربری خود را انتخاب کنید.
-  </p>
+    body {
+      width: 100%;
+      min-height: 100vh;
+      background: #0b1224;
+      color: #fff;
+      font-family: Vazirmatn, Tahoma, sans-serif;
+      overflow-x: hidden;
+    }
 
-  <div class="role-grid">
-    <a href="#admin-login" class="role-card" style="text-decoration:none;color:white">
-      <div class="role-icon">♜</div>
-      <h3>مدیر مدرسه</h3>
-      <p>مدیریت اطلاعات و امکانات مدرسه</p>
-      <span class="login-link">ورود به پنل مدیر</span>
-    </a>
+    .login-section {
+      width: 100%;
+      max-width: 1100px;
+      margin: auto;
+      padding: 55px 24px;
+      text-align: center;
+    }
 
-    <a href="#student-login" class="role-card" style="text-decoration:none;color:white">
-      <div class="role-icon">✎</div>
-      <h3>دانش‌آموز</h3>
-      <p>مشاهده نمرات و اطلاعات آموزشی</p>
-      <span class="login-link">ورود به پنل دانش‌آموز</span>
-    </a>
+    .brand {
+      color: #a78bfa;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      margin-bottom: 15px;
+    }
 
-    <a href="#parent-login" class="role-card" style="text-decoration:none;color:white">
-      <div class="role-icon">♡</div>
-      <h3>والدین</h3>
-      <p>پیگیری وضعیت تحصیلی فرزند</p>
-      <span class="login-link">ورود به پنل والدین</span>
-    </a>
-  </div>
+    .login-title {
+      font-size: 34px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
 
-  <div id="admin-login" class="login-form">
-    <h3>ورود مدیر مدرسه</h3>
-    <label>نام کاربری</label>
-    <input type="text" placeholder="نام کاربری مدیر">
-    <label>رمز عبور</label>
-    <input type="password" placeholder="رمز عبور مدیر">
-    <a href="./school-panel/index.html" class="submit-link">ورود به پنل مدیر</a>
-    <a href="#" class="back-link">بازگشت به انتخاب نقش</a>
-  </div>
+    .login-description {
+      color: #aab5ca;
+      font-size: 15px;
+      line-height: 2;
+      margin-bottom: 40px;
+    }
 
-  <div id="student-login" class="login-form">
-    <h3>ورود دانش‌آموز</h3>
-    <label>نام کاربری</label>
-    <input type="text" placeholder="نام کاربری دانش‌آموز">
-    <label>رمز عبور</label>
-    <input type="password" placeholder="رمز عبور دانش‌آموز">
-    <a href="./student-panel/index.html" class="submit-link">ورود به پنل دانش‌آموز</a>
-    <a href="#" class="back-link">بازگشت به انتخاب نقش</a>
-  </div>
+    .role-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+      width: 100%;
+    }
 
-  <div id="parent-login" class="login-form">
-    <h3>ورود والدین</h3>
-    <label>نام کاربری</label>
-    <input type="text" placeholder="نام کاربری والدین">
-    <label>رمز عبور</label>
-    <input type="password" placeholder="رمز عبور والدین">
-    <a href="./parent-panel/index.html" class="submit-link">ورود به پنل والدین</a>
-    <a href="#" class="back-link">بازگشت به انتخاب نقش</a>
-  </div>
+    .role-card {
+      display: block;
+      padding: 32px 20px;
+      background: #17243d;
+      border: 1px solid #34415b;
+      border-radius: 22px;
+      color: white;
+      text-decoration: none;
+      transition: .25s ease;
+    }
 
-  <p class="login-note">
-    سامانه مدیریت و آموزش مدرسه<br>
-    نسخه نمایشی پروژه
-  </p>
-</section>
+    .role-card:hover {
+      transform: translateY(-5px);
+      border-color: #a78bfa;
+      background: #202f4d;
+    }
+
+    .role-icon {
+      font-size: 45px;
+      margin-bottom: 15px;
+    }
+
+    .role-card h3 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .role-card p {
+      color: #aab5ca;
+      font-size: 13px;
+      line-height: 2;
+    }
+
+    .role-button {
+      display: inline-block;
+      margin-top: 22px;
+      padding: 11px 20px;
+      background: #6746d8;
+      color: white;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .login-form {
+      display: none;
+      width: 100%;
+      max-width: 430px;
+      margin: 30px auto;
+      padding: 30px;
+      background: #17243d;
+      border: 1px solid #5946a5;
+      border-radius: 22px;
+      text-align: right;
+    }
+
+    .login-form:target {
+      display: block;
+    }
+
+    .login-form h3 {
+      text-align: center;
+      font-size: 22px;
+      margin-bottom: 25px;
+    }
+
+    .login-form label {
+      display: block;
+      color: #cbd5e1;
+      font-size: 13px;
+      margin: 17px 0 9px;
+    }
+
+    .login-form input {
+      display: block;
+      width: 100%;
+      min-width: 0;
+      padding: 14px;
+      background: #0b1224;
+      border: 1px solid #394968;
+      border-radius: 11px;
+      color: white;
+      font-family: inherit;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .login-form input:focus {
+      border-color: #a78bfa;
+    }
+
+    .submit-link {
+      display: block;
+      margin-top: 25px;
+      padding: 14px;
+      background: #6746d8;
+      color: white;
+      border-radius: 11px;
+      text-align: center;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .back-link {
+      display: block;
+      margin-top: 20px;
+      text-align: center;
+      color: #aab5ca;
+      font-size: 13px;
+      text-decoration: none;
+    }
+
+    .login-note {
+      margin-top: 30px;
+      color: #8491aa;
+      font-size: 12px;
+      line-height: 2;
+    }
+
+    .footer {
+      margin-top: 55px;
+      color: #66738d;
+      font-size: 12px;
+    }
+
+    /* Tablet */
+    @media (max-width: 768px) {
+      .login-section {
+        padding: 40px 20px;
+      }
+
+      .role-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        max-width: 480px;
+        margin: auto;
+      }
+
+      .role-card {
+        padding: 24px 18px;
+      }
+
+      .role-icon {
+        font-size: 38px;
+        margin-bottom: 8px;
+      }
+
+      .login-title {
+        font-size: 27px;
+      }
+
+      .login-description {
+        font-size: 13px;
+        margin-bottom: 28px;
+      }
+    }
+
+    /* Mobile */
+    @media (max-width: 480px) {
+      .login-section {
+        padding: 32px 15px;
+      }
+
+      .login-title {
+        font-size: 24px;
+      }
+
+      .login-form {
+        padding: 24px 18px;
+        margin-top: 22px;
+      }
+
+      .login-form h3 {
+        font-size: 20px;
+      }
+
+      .role-card h3 {
+        font-size: 18px;
+      }
+
+      .footer {
+        margin-top: 35px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="login-section">
+
+    <div class="brand">SMART SCHOOL PORTAL</div>
+
+    <h1 class="login-title">سامانه مدرسه هوشمند</h1>
+
+    <p class="login-description">
+      برای ورود به سامانه، نقش کاربری خود را انتخاب کنید.
+    </p>
+
+    <section class="role-grid">
+
+      <a href="#admin-login" class="role-card">
+        <div class="role-icon">♜</div>
+        <h3>مدیر مدرسه</h3>
+        <p>مدیریت اطلاعات و امکانات مدرسه</p>
+        <span class="role-button">ورود به پنل مدیر</span>
+      </a>
+
+      <a href="#student-login" class="role-card">
+        <div class="role-icon">✎</div>
+        <h3>دانش‌آموز</h3>
+        <p>مشاهده نمرات و اطلاعات آموزشی</p>
+        <span class="role-button">ورود به پنل دانش‌آموز</span>
+      </a>
+
+      <a href="#parent-login" class="role-card">
+        <div class="role-icon">♡</div>
+        <h3>والدین</h3>
+        <p>پیگیری وضعیت تحصیلی فرزند</p>
+        <span class="role-button">ورود به پنل والدین</span>
+      </a>
+
+    </section>
+
+    <!-- Admin Login -->
+    <section id="admin-login" class="login-form">
+      <h3>ورود مدیر مدرسه</h3>
+
+      <label>نام کاربری</label>
+      <input type="text" placeholder="نام کاربری مدیر">
+
+      <label>رمز عبور</label>
+      <input type="password" placeholder="رمز عبور مدیر">
+
+      <a href="./school-panel/index.html" class="submit-link">
+        ورود به پنل مدیر
+      </a>
+
+      <a href="#" class="back-link">بازگشت به انتخاب نقش</a>
+    </section>
+
+    <!-- Student Login -->
+    <section id="student-login" class="login-form">
+      <h3>ورود دانش‌آموز</h3>
+
+      <label>نام کاربری</label>
+      <input type="text" placeholder="نام کاربری دانش‌آموز">
+
+      <label>رمز عبور</label>
+      <input type="password" placeholder="رمز عبور دانش‌آموز">
+
+      <a href="./student-panel/index.html" class="submit-link">
+        ورود به پنل دانش‌آموز
+      </a>
+
+      <a href="#" class="back-link">بازگشت به انتخاب نقش</a>
+    </section>
+
+    <!-- Parent Login -->
+    <section id="parent-login" class="login-form">
+      <h3>ورود والدین</h3>
+
+      <label>نام کاربری</label>
+      <input type="text" placeholder="نام کاربری والدین">
+
+      <label>رمز عبور</label>
+      <input type="password" placeholder="رمز عبور والدین">
+
+      <a href="./parent-panel/index.html" class="submit-link">
+        ورود به پنل والدین
+      </a>
+
+      <a href="#" class="back-link">بازگشت به انتخاب نقش</a>
+    </section>
+
+    <p class="login-note">
+      نسخه نمایشی پروژه مدیریت مدرسه
+    </p>
+
+    <footer class="footer">
+      SMART SCHOOL MANAGEMENT SYSTEM
+    </footer>
+
+  </main>
+
+</body>
+</html>
